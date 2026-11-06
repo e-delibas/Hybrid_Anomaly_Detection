@@ -1,6 +1,6 @@
 # Autoencoder representations for anomaly detection
 
-Code for **Evaluating Autoencoder Representations for Anomaly Detection: An Explainable Hybrid Framework**, manuscript JER-D-26-01469.
+Code for **Evaluating Autoencoder Representations for Anomaly Detection: An Explainable Hybrid Framework**.
 
 This release candidate reorganizes the authors' 28 executed revision notebooks. It retains the recorded experiment plans, detector definitions and source checks. Large plans and worker programs are stored under `assets/`; notebook outputs have been cleared. `notebook_map.csv` maps each release notebook to its original filename.
 
