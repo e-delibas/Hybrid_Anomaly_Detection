@@ -1,0 +1,276 @@
+{
+  "fold_relative_directory": "05_FD001_grouped_cv/20261027T085136_896849Z/seed_42/fold_01",
+  "expected_versions": {
+    "python": "3.12.16",
+    "numpy": "2.1.3",
+    "pandas": "2.2.3",
+    "sklearn": "1.6.1",
+    "tensorflow": "2.21.0"
+  },
+  "known_hashes": {
+    "05_FD001_grouped_cv/20261027T085136_896849Z/seed_42/fold_01/selection_trials.json": "7995891a5cace934df21cd645c2a7957330a18de4570ad0fe11a96073b16d186",
+    "05_FD001_grouped_cv/20261027T085136_896849Z/seed_42/fold_01/encoder.keras": "0755bc949327dab89f1ee90696e35679191fa432d5d984ed4459a0c7be6785a1",
+    "05_FD001_grouped_cv/20261027T085136_896849Z/seed_42/fold_01/autoencoder.keras": "ecd13295cd409d042562a56ed7613d8183aa435dc9ef4c406f349363804bcc6b",
+    "05_FD001_grouped_cv/20261027T085136_896849Z/seed_42/fold_01/scaler_parameters.json": "a5f23365e0ef431845766d0f439e6850e80a35c1435ddcb65c12d3f32540db61",
+    "05_FD001_grouped_cv/20261027T085136_896849Z/seed_42/fold_01/pilot_plan.json": "fcc4cf5dcf48f979f03a81ec4d9420557e1db2ebe1b48a90536a7c42e4946a4f",
+    "05_FD001_grouped_cv/20261027T085136_896849Z/seed_42/fold_01/representation_metrics.csv": "1523d32e19af6dacaf7b507e9d997221c3f21d689fe64b530f1814588db52ce1",
+    "02_FD001_protocol/experiment_protocol.json": "0bd6c241f0e50cdd3c00888d62840649a06f21ca7583fb59ecffedc01979d056",
+    "02_FD001_protocol/engine_splits.csv": "53c2ed564fcded8e502f307c0011aa1cd12ebd03b4429882e1fdf142466f7c45",
+    "02_FD001_protocol/train_evaluation_reference.csv": "c6b5e08384280fb687b188723fa7ecf7e76254a9ec20fc606be206f8de7a27e8",
+    "02_FD001_protocol/role_summary.csv": "a31fb6ead724b9190cb2a3de692c4f189f27d3cc589274c38fe65b2cffca82d7"
+  },
+  "train_sha256": "963b5e22825b34d8b21c69e1aeb4af3e647050eb672ee8834ba4b5d91d2de0f8",
+  "approved_primary_results": [
+    {
+      "representation": "Raw",
+      "method": "IF",
+      "RUL_window": 30,
+      "selected_params": {
+        "n_estimators": 400
+      },
+      "selection_AP_primary": 0.7957486368454624,
+      "threshold": 0.47326042503387084,
+      "AP": 0.7708424039543613,
+      "ROC_AUC": 0.9415756891655936,
+      "precision": 0.660377358490566,
+      "recall": 0.7903225806451613,
+      "F1": 0.7195301027900147,
+      "Macro_F1": 0.8332151486983157,
+      "TP": 245,
+      "FP": 126,
+      "TN": 1703,
+      "FN": 65,
+      "fold": 1,
+      "seed": 42
+    },
+    {
+      "representation": "Raw",
+      "method": "LOF",
+      "RUL_window": 30,
+      "selected_params": {
+        "n_neighbors": 100
+      },
+      "selection_AP_primary": 0.1608048672224708,
+      "threshold": 0.9772202372550964,
+      "AP": 0.16222260976337305,
+      "ROC_AUC": 0.49262509038960123,
+      "precision": 0.1482194417709336,
+      "recall": 0.9935483870967742,
+      "F1": 0.25795644891122277,
+      "Macro_F1": 0.1601951556725426,
+      "TP": 308,
+      "FP": 1770,
+      "TN": 59,
+      "FN": 2,
+      "fold": 1,
+      "seed": 42
+    },
+    {
+      "representation": "Raw",
+      "method": "kNN",
+      "RUL_window": 30,
+      "selected_params": {
+        "n_neighbors": 100
+      },
+      "selection_AP_primary": 0.5133043194351089,
+      "threshold": 2.097911834716797,
+      "AP": 0.6109647146257249,
+      "ROC_AUC": 0.9021975696220393,
+      "precision": 0.4634615384615385,
+      "recall": 0.7774193548387097,
+      "F1": 0.5807228915662651,
+      "Macro_F1": 0.7398974086601627,
+      "TP": 241,
+      "FP": 279,
+      "TN": 1550,
+      "FN": 69,
+      "fold": 1,
+      "seed": 42
+    },
+    {
+      "representation": "AE_latent21",
+      "method": "IF",
+      "RUL_window": 30,
+      "selected_params": {
+        "n_estimators": 400
+      },
+      "selection_AP_primary": 0.6345411885290444,
+      "threshold": 0.458232335703492,
+      "AP": 0.6065616932454007,
+      "ROC_AUC": 0.9286389530679553,
+      "precision": 0.6692913385826772,
+      "recall": 0.8225806451612904,
+      "F1": 0.7380607814761215,
+      "Macro_F1": 0.8438003935259057,
+      "TP": 255,
+      "FP": 126,
+      "TN": 1703,
+      "FN": 55,
+      "fold": 1,
+      "seed": 42
+    },
+    {
+      "representation": "AE_latent21",
+      "method": "LOF",
+      "RUL_window": 30,
+      "selected_params": {
+        "n_neighbors": 50
+      },
+      "selection_AP_primary": 0.15262511192515427,
+      "threshold": 0.9741883277893066,
+      "AP": 0.15833341012453866,
+      "ROC_AUC": 0.4982442371117657,
+      "precision": 0.14749403341288783,
+      "recall": 0.9967741935483871,
+      "F1": 0.256964656964657,
+      "Macro_F1": 0.15144015015878337,
+      "TP": 309,
+      "FP": 1786,
+      "TN": 43,
+      "FN": 1,
+      "fold": 1,
+      "seed": 42
+    },
+    {
+      "representation": "AE_latent21",
+      "method": "kNN",
+      "RUL_window": 30,
+      "selected_params": {
+        "n_neighbors": 100
+      },
+      "selection_AP_primary": 0.5812630146418766,
+      "threshold": 2.232003927230835,
+      "AP": 0.694643662082202,
+      "ROC_AUC": 0.925660064551403,
+      "precision": 0.48507462686567165,
+      "recall": 0.8387096774193549,
+      "F1": 0.6146572104018913,
+      "Macro_F1": 0.7598344327067732,
+      "TP": 260,
+      "FP": 276,
+      "TN": 1553,
+      "FN": 50,
+      "fold": 1,
+      "seed": 42
+    },
+    {
+      "representation": "AE_reconstruction",
+      "method": "MSE",
+      "RUL_window": 30,
+      "selected_params": {},
+      "selection_AP_primary": 0.21892110609077126,
+      "threshold": 0.00015082753088790923,
+      "AP": 0.21975870548360865,
+      "ROC_AUC": 0.7000634931833013,
+      "precision": 0.21678321678321677,
+      "recall": 0.8,
+      "F1": 0.34112792297111416,
+      "Macro_F1": 0.5009463977461803,
+      "TP": 248,
+      "FP": 896,
+      "TN": 933,
+      "FN": 62,
+      "fold": 1,
+      "seed": 42
+    }
+  ],
+  "source_recovery_audit_sha256": "45aa50d0cdfef72fd7c5bf28b3090722accc28c238659f96f9f17cdd3803f994",
+  "source_model_reproduction_sha256": "e1686ab38e39ef93d6f423c3e455fe1c2dfc2ada180f43c4dce6ba95b4d2124c",
+  "five_method_addendum": {
+    "id": "five_detector_completion_v1_pilot",
+    "scope": "FD001 outer fold1 seed42; Raw and saved AE_latent21; MSE additional control",
+    "original_detectors": [
+      "DBSCAN",
+      "IF",
+      "LOF",
+      "OC-SVM",
+      "kNN"
+    ],
+    "new_methods": [
+      "DBSCAN",
+      "OC-SVM"
+    ],
+    "representations": [
+      "Raw",
+      "AE_latent21"
+    ],
+    "reuse": "Stage05 selected IF/LOF/kNN results and MSE only after in-run baseline score reproduction; saved AE is not re-trained",
+    "roles": "Same 70 fit / 10 early_stop / 10 selection / 10 outer engines from immutable stage02; model/scaler fits use fitting engines only",
+    "primary_reference": "RUL<=30 late-life proxy, not independent annotated fault onset",
+    "sensitivity_windows": [
+      20,
+      40
+    ],
+    "selection": "max selection AP; exact ties keep first candidate; threshold=max positive-class selection F1 with 1e-12 tie tolerance choosing highest threshold",
+    "prediction": "score >= selection threshold",
+    "new_detector_numeric_dtype": "float64; reused Raw/AE representation generation unchanged",
+    "DBSCAN": {
+      "min_samples": [
+        20,
+        50,
+        100
+      ],
+      "eps_quantiles": [
+        0.5,
+        0.75,
+        0.9
+      ],
+      "eps_rule": "fit-only q quantile (linear interpolation) of Euclidean mth-neighbor distance, explicitly including self in count",
+      "fixed": {
+        "metric": "euclidean",
+        "algorithm": "ball_tree",
+        "n_jobs": -1
+      },
+      "score": "minimum Euclidean distance from query to frozen fit-set DBSCAN core samples divided by eps",
+      "variant": "DBSCAN_core_distance_v1",
+      "no_query_refit": true,
+      "diagnostic_rule": "score > 1 (outside all fixed core epsilon balls); not native DBSCAN predict; reported separately from selection-F1 threshold"
+    },
+    "OC-SVM": {
+      "nu": [
+        0.01,
+        0.05,
+        0.1
+      ],
+      "gamma": [
+        0.0001,
+        0.01,
+        "scale"
+      ],
+      "fixed": {
+        "kernel": "rbf",
+        "tol": 0.001,
+        "cache_size": 512,
+        "shrinking": true,
+        "max_iter": 100000
+      },
+      "score": "negative score_samples"
+    },
+    "resources": {
+      "max_dbscan_neighbor_entries": 20000000,
+      "worker_timeout_seconds": 3600,
+      "policy": "resource limit aborts entire pilot; candidates are not silently dropped for memory; undefined/no-convergence candidates are logged and cause REVIEW_REQUIRED_CANDIDATES"
+    },
+    "candidate_count": {
+      "DBSCAN_per_representation": 9,
+      "OC-SVM_per_representation": 9,
+      "new_total": 36
+    },
+    "scope_counts": {
+      "primary_groups": 11,
+      "metrics_all_three_windows": 33
+    },
+    "transparency": [
+      "DBSCAN out-of-sample scoring is an explicit core-distance extension, not a native predict API.",
+      "Original notebook fit DBSCAN on the test batch; this pilot does not preserve that transductive behavior.",
+      "Limited follow-up grids are frozen before this pilot, after prior outer results were already observed; not original preregistration.",
+      "Nine candidates for each new detector versus three in existing IF/LOF/kNN grids; no equal search-budget or optimality claim.",
+      "Five methods are retained; this one-fold pilot is not the completed five-method CV study."
+    ],
+    "sources": [
+      "https://scikit-learn.org/1.6/modules/generated/sklearn.cluster.DBSCAN.html",
+      "https://scikit-learn.org/1.6/modules/generated/sklearn.svm.OneClassSVM.html"
+    ]
+  },
+  "addendum_sha256": "0c0a2f4fe81329664ce03fb9e4b689309f63420f5f7937076b6271ab51a2ab28"
+}

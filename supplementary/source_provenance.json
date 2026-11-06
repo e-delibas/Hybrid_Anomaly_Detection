@@ -1,0 +1,54 @@
+{
+  "sources": [
+    {
+      "stage": "07C",
+      "source_file": "pca_completion_summary.json",
+      "source_json_sha256": "3825b2fb732b88a60a3d8b04c82a525f413b5e996710a32baf633b238ba1a0b8",
+      "source_archive_sha256": null,
+      "source_status": "PASS_FD001_PCA_COMPARISON_5_METHODS",
+      "plan_sha256": "3ecdb18b7628f734429f574cc1ad0f39b80ea0b4dfa33d3843cc85d059e7a22b",
+      "fold_rows": 5940,
+      "aggregate_rows": 198
+    },
+    {
+      "stage": "10C",
+      "source_file": "additional_completion_summary.json",
+      "source_json_sha256": "cb96a63abdbccbae8e09f82755802724a6c0820c9fb8e477c088338c1cf48afd",
+      "source_archive_sha256": "0cc149052e1ff647756706bfddc8668e933638b703c544770eb6ed7ecd4cb9c7",
+      "source_status": "PASS_ADDITIONAL_CV_5_METHODS",
+      "plan_sha256": "6a075fa7e6989e75ba6fd7d072824978a770a6e7e3bac186a92bd6bd7e155c9c",
+      "fold_rows": 7290,
+      "aggregate_rows": 243
+    },
+    {
+      "stage": "15C",
+      "source_file": "sead_completion_summary.json",
+      "source_json_sha256": "1402af6e1e0d39c7f80f0af035870b1189ee6ccac140b66b08d80493fabfe2ff",
+      "source_archive_sha256": null,
+      "source_status": "PASS_FULL_CV",
+      "plan_sha256": "b58a2e2a45b866dfe7d96b4d719d1dd622d86fbfbd884314ba2057da9705b6b1",
+      "fold_rows": 630,
+      "aggregate_rows": 21
+    }
+  ],
+  "validation": {
+    "status": "PASS",
+    "scope": "Exported summary and fold records; no model retraining or re-evaluation of per-cycle anomaly scores.",
+    "aggregate_rows": 462,
+    "fold_rows": 13860,
+    "matched_window_triplets": 4620,
+    "mean_sd_max_absolute_difference": 0.0,
+    "all_five_classical_detectors_preserved": true,
+    "checks": [
+      "unique fold keys",
+      "10 folds x 3 seeds for every group",
+      "confusion-derived metrics",
+      "aggregate means and sample SDs",
+      "same threshold, selected parameters, alarm count and sample count across windows"
+    ],
+    "limitations": [
+      "AP and ROC-AUC were checked for aggregate consistency, not recomputed from per-cycle scores.",
+      "Fixed alarm counts do not prove identical individual predictions; unchanged scores are established by the experiment code and archived run protocol."
+    ]
+  }
+}

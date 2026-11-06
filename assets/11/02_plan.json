@@ -1,0 +1,216 @@
+{
+  "cv_path": "05B_FD001_five_method_completion/6c906a050a6b9c7fefb8/cv_completion_summary.json",
+  "cv_hash": "f0c2efb1eebe5fb88bddedd26b364b2f3c19ef7d2e40260218b74de9ee8bc799",
+  "jobs": [
+    {
+      "seed": 42,
+      "fold": 1,
+      "new_marker": "03B_five_method_pilot/20261030T063530_360812Z/five_method_pilot_summary.json",
+      "new_marker_sha256": "b91345dd2d526ef2b00eb3fa09a38ef2c85c3bbd063b2c41b55453969086cae8",
+      "old_dir": "05_FD001_grouped_cv/20261027T085136_896849Z/seed_42/fold_01"
+    },
+    {
+      "seed": 42,
+      "fold": 2,
+      "new_marker": "05B_FD001_five_method_completion/6c906a050a6b9c7fefb8/seed_42/fold_02/attempt_20261030T112429_077833Z/fold_completion_summary.json",
+      "new_marker_sha256": "ed61960b792eea63649b86094009ea88f943ca62af680d75b71774b8a96d8406",
+      "old_dir": "05_FD001_grouped_cv/20261027T085136_896849Z/seed_42/fold_02"
+    },
+    {
+      "seed": 42,
+      "fold": 3,
+      "new_marker": "05B_FD001_five_method_completion/6c906a050a6b9c7fefb8/seed_42/fold_03/attempt_20261030T112514_344952Z/fold_completion_summary.json",
+      "new_marker_sha256": "40670f18292072e83a4d5e1d2e7de58c59ab060583d887db3ea87abf6f0ddef7",
+      "old_dir": "05_FD001_grouped_cv/20261027T085136_896849Z/seed_42/fold_03"
+    },
+    {
+      "seed": 42,
+      "fold": 4,
+      "new_marker": "05B_FD001_five_method_completion/6c906a050a6b9c7fefb8/seed_42/fold_04/attempt_20261030T112559_703873Z/fold_completion_summary.json",
+      "new_marker_sha256": "221c6e37ae3386ca6a36afdf4b2e4abf50963065c84edd26cc97f1becec550e6",
+      "old_dir": "05_FD001_grouped_cv/20261027T085136_896849Z/seed_42/fold_04"
+    },
+    {
+      "seed": 42,
+      "fold": 5,
+      "new_marker": "05B_FD001_five_method_completion/6c906a050a6b9c7fefb8/seed_42/fold_05/attempt_20261030T112647_961589Z/fold_completion_summary.json",
+      "new_marker_sha256": "4c9369f572150f25785437b42a4cf8d3b6088960320fa0d10b186758f8f2bd78",
+      "old_dir": "05_FD001_grouped_cv/20261027T085136_896849Z/seed_42/fold_05"
+    },
+    {
+      "seed": 42,
+      "fold": 6,
+      "new_marker": "05B_FD001_five_method_completion/6c906a050a6b9c7fefb8/seed_42/fold_06/attempt_20261030T112735_323168Z/fold_completion_summary.json",
+      "new_marker_sha256": "4299b965c77597c1d52f82b4c1d87125c5c4452a9278dc5c691d521f3f107fea",
+      "old_dir": "05_FD001_grouped_cv/20261027T085136_896849Z/seed_42/fold_06"
+    },
+    {
+      "seed": 42,
+      "fold": 7,
+      "new_marker": "05B_FD001_five_method_completion/6c906a050a6b9c7fefb8/seed_42/fold_07/attempt_20261030T112820_664664Z/fold_completion_summary.json",
+      "new_marker_sha256": "80275eaf1fad7cd029fabe556530752e36cbf0e9ebaeaedf4d052f76bb42655a",
+      "old_dir": "05_FD001_grouped_cv/20261027T085136_896849Z/seed_42/fold_07"
+    },
+    {
+      "seed": 42,
+      "fold": 8,
+      "new_marker": "05B_FD001_five_method_completion/6c906a050a6b9c7fefb8/seed_42/fold_08/attempt_20261030T112906_975921Z/fold_completion_summary.json",
+      "new_marker_sha256": "9e414f1002e4f9979de43365e16e7e2e94eb38ac5466a632945a1da63783f345",
+      "old_dir": "05_FD001_grouped_cv/20261027T085136_896849Z/seed_42/fold_08"
+    },
+    {
+      "seed": 42,
+      "fold": 9,
+      "new_marker": "05B_FD001_five_method_completion/6c906a050a6b9c7fefb8/seed_42/fold_09/attempt_20261030T112954_323596Z/fold_completion_summary.json",
+      "new_marker_sha256": "48ff7ed6ce3cca67b69bc4e4c5f2790840c6dab7fc439d9a092f287b9e177f6f",
+      "old_dir": "05_FD001_grouped_cv/20261027T085136_896849Z/seed_42/fold_09"
+    },
+    {
+      "seed": 42,
+      "fold": 10,
+      "new_marker": "05B_FD001_five_method_completion/6c906a050a6b9c7fefb8/seed_42/fold_10/attempt_20261030T113040_635985Z/fold_completion_summary.json",
+      "new_marker_sha256": "92f3989231ad7eb83c49d333d4f1f61a2c2488c46c3992eddad09b9974227783",
+      "old_dir": "05_FD001_grouped_cv/20261027T085136_896849Z/seed_42/fold_10"
+    },
+    {
+      "seed": 43,
+      "fold": 1,
+      "new_marker": "05B_FD001_five_method_completion/6c906a050a6b9c7fefb8/seed_43/fold_01/attempt_20261030T113126_884272Z/fold_completion_summary.json",
+      "new_marker_sha256": "033bc304d42ee66902f0066f65c844d4ab3c8354f8d9803481949f60fb2a4192",
+      "old_dir": "05_FD001_grouped_cv/20261027T085136_896849Z/seed_43/fold_01"
+    },
+    {
+      "seed": 43,
+      "fold": 2,
+      "new_marker": "05B_FD001_five_method_completion/6c906a050a6b9c7fefb8/seed_43/fold_02/attempt_20261030T113212_158045Z/fold_completion_summary.json",
+      "new_marker_sha256": "b01504938c1919a38895ef0d1c593405b74f76fab33a07a6e3bb1e87467d3231",
+      "old_dir": "05_FD001_grouped_cv/20261027T085136_896849Z/seed_43/fold_02"
+    },
+    {
+      "seed": 43,
+      "fold": 3,
+      "new_marker": "05B_FD001_five_method_completion/6c906a050a6b9c7fefb8/seed_43/fold_03/attempt_20261030T113257_442683Z/fold_completion_summary.json",
+      "new_marker_sha256": "82f2c47710e5d2cdc85f63433cb9894de2c35674ddddf72f6cbe6e1b703ce8fc",
+      "old_dir": "05_FD001_grouped_cv/20261027T085136_896849Z/seed_43/fold_03"
+    },
+    {
+      "seed": 43,
+      "fold": 4,
+      "new_marker": "05B_FD001_five_method_completion/6c906a050a6b9c7fefb8/seed_43/fold_04/attempt_20261030T113342_814422Z/fold_completion_summary.json",
+      "new_marker_sha256": "8d1f6e3afa00423afcf810bd684163138db9bbce6423e660db7b4d55ee1e0344",
+      "old_dir": "05_FD001_grouped_cv/20261027T085136_896849Z/seed_43/fold_04"
+    },
+    {
+      "seed": 43,
+      "fold": 5,
+      "new_marker": "05B_FD001_five_method_completion/6c906a050a6b9c7fefb8/seed_43/fold_05/attempt_20261030T113429_085226Z/fold_completion_summary.json",
+      "new_marker_sha256": "c8bd474d230281ce998752b4b08b6f54d0a084e5f32bd9d5e7ab78dd9908c6df",
+      "old_dir": "05_FD001_grouped_cv/20261027T085136_896849Z/seed_43/fold_05"
+    },
+    {
+      "seed": 43,
+      "fold": 6,
+      "new_marker": "05B_FD001_five_method_completion/6c906a050a6b9c7fefb8/seed_43/fold_06/attempt_20261030T113513_390817Z/fold_completion_summary.json",
+      "new_marker_sha256": "37fc8f73e3f7b8b134bb9cec6cd225a8f654ae47a2c9c0a899a7000a079ac1e8",
+      "old_dir": "05_FD001_grouped_cv/20261027T085136_896849Z/seed_43/fold_06"
+    },
+    {
+      "seed": 43,
+      "fold": 7,
+      "new_marker": "05B_FD001_five_method_completion/6c906a050a6b9c7fefb8/seed_43/fold_07/attempt_20261030T113558_652530Z/fold_completion_summary.json",
+      "new_marker_sha256": "af5d838a99c487de928ed8a12aaa7b68eeb46271e1a50067692a1b5c7f88fcf1",
+      "old_dir": "05_FD001_grouped_cv/20261027T085136_896849Z/seed_43/fold_07"
+    },
+    {
+      "seed": 43,
+      "fold": 8,
+      "new_marker": "05B_FD001_five_method_completion/6c906a050a6b9c7fefb8/seed_43/fold_08/attempt_20261030T113642_899341Z/fold_completion_summary.json",
+      "new_marker_sha256": "930f3388cae6ce2bfaef09f0ff01bfd3b7abecaee16fbcec350124387e541f7c",
+      "old_dir": "05_FD001_grouped_cv/20261027T085136_896849Z/seed_43/fold_08"
+    },
+    {
+      "seed": 43,
+      "fold": 9,
+      "new_marker": "05B_FD001_five_method_completion/6c906a050a6b9c7fefb8/seed_43/fold_09/attempt_20261030T113730_194370Z/fold_completion_summary.json",
+      "new_marker_sha256": "768ea86bd7a1df88883d64101b1c0ca55b4910a62cecd996fa9ff37ef850bc8b",
+      "old_dir": "05_FD001_grouped_cv/20261027T085136_896849Z/seed_43/fold_09"
+    },
+    {
+      "seed": 43,
+      "fold": 10,
+      "new_marker": "05B_FD001_five_method_completion/6c906a050a6b9c7fefb8/seed_43/fold_10/attempt_20261030T113816_499996Z/fold_completion_summary.json",
+      "new_marker_sha256": "63777f0cedb4f8df2c5ee39fb0b95f2c2f201f6982e9f5ebda9f87a1ff1729c7",
+      "old_dir": "05_FD001_grouped_cv/20261027T085136_896849Z/seed_43/fold_10"
+    },
+    {
+      "seed": 44,
+      "fold": 1,
+      "new_marker": "05B_FD001_five_method_completion/6c906a050a6b9c7fefb8/seed_44/fold_01/attempt_20261030T113901_847499Z/fold_completion_summary.json",
+      "new_marker_sha256": "c7a198dc19343a212519d962e68c704d308a146c649eb6b3cb681256bb038c41",
+      "old_dir": "05_FD001_grouped_cv/20261027T085136_896849Z/seed_44/fold_01"
+    },
+    {
+      "seed": 44,
+      "fold": 2,
+      "new_marker": "05B_FD001_five_method_completion/6c906a050a6b9c7fefb8/seed_44/fold_02/attempt_20261030T113948_177761Z/fold_completion_summary.json",
+      "new_marker_sha256": "16c810334e0cd291daf5945bd7755cd4158adb0281b457d8f3e1a426de0c57c8",
+      "old_dir": "05_FD001_grouped_cv/20261027T085136_896849Z/seed_44/fold_02"
+    },
+    {
+      "seed": 44,
+      "fold": 3,
+      "new_marker": "05B_FD001_five_method_completion/6c906a050a6b9c7fefb8/seed_44/fold_03/attempt_20261030T114032_468104Z/fold_completion_summary.json",
+      "new_marker_sha256": "72ab401f5f3ebd5233656bb36feb1b9c912ffb5d720520305b8922bd2ec7a676",
+      "old_dir": "05_FD001_grouped_cv/20261027T085136_896849Z/seed_44/fold_03"
+    },
+    {
+      "seed": 44,
+      "fold": 4,
+      "new_marker": "05B_FD001_five_method_completion/6c906a050a6b9c7fefb8/seed_44/fold_04/attempt_20261030T114119_778753Z/fold_completion_summary.json",
+      "new_marker_sha256": "ef98b47c4addba4b766f4ed0f294d2a2ce08495de56b292f6f26343932421591",
+      "old_dir": "05_FD001_grouped_cv/20261027T085136_896849Z/seed_44/fold_04"
+    },
+    {
+      "seed": 44,
+      "fold": 5,
+      "new_marker": "05B_FD001_five_method_completion/6c906a050a6b9c7fefb8/seed_44/fold_05/attempt_20261030T114206_066716Z/fold_completion_summary.json",
+      "new_marker_sha256": "4492ace2ff1834095f7861bc104609b539d056b855964097fd41f1312c412cdb",
+      "old_dir": "05_FD001_grouped_cv/20261027T085136_896849Z/seed_44/fold_05"
+    },
+    {
+      "seed": 44,
+      "fold": 6,
+      "new_marker": "05B_FD001_five_method_completion/6c906a050a6b9c7fefb8/seed_44/fold_06/attempt_20261030T114253_408569Z/fold_completion_summary.json",
+      "new_marker_sha256": "17c96024a45b83587dcd5428d8ef65cf1f7d9bfbb389622c09a652f88edee8d0",
+      "old_dir": "05_FD001_grouped_cv/20261027T085136_896849Z/seed_44/fold_06"
+    },
+    {
+      "seed": 44,
+      "fold": 7,
+      "new_marker": "05B_FD001_five_method_completion/6c906a050a6b9c7fefb8/seed_44/fold_07/attempt_20261030T114338_684107Z/fold_completion_summary.json",
+      "new_marker_sha256": "2e083e51ee81b3d26da8ddf85782bc5aa83b2e1d73a4315a4a97edc23e9d6b3e",
+      "old_dir": "05_FD001_grouped_cv/20261027T085136_896849Z/seed_44/fold_07"
+    },
+    {
+      "seed": 44,
+      "fold": 8,
+      "new_marker": "05B_FD001_five_method_completion/6c906a050a6b9c7fefb8/seed_44/fold_08/attempt_20261030T114420_988976Z/fold_completion_summary.json",
+      "new_marker_sha256": "07836ab101821dd988d845c48839dae51836d615f415e7c665a783c948766da2",
+      "old_dir": "05_FD001_grouped_cv/20261027T085136_896849Z/seed_44/fold_08"
+    },
+    {
+      "seed": 44,
+      "fold": 9,
+      "new_marker": "05B_FD001_five_method_completion/6c906a050a6b9c7fefb8/seed_44/fold_09/attempt_20261030T114509_323758Z/fold_completion_summary.json",
+      "new_marker_sha256": "fb043d5557ae5298fe2f47b3afb1f15d36eb84705c0b78ac5feda8e3a7f5e931",
+      "old_dir": "05_FD001_grouped_cv/20261027T085136_896849Z/seed_44/fold_09"
+    },
+    {
+      "seed": 44,
+      "fold": 10,
+      "new_marker": "05B_FD001_five_method_completion/6c906a050a6b9c7fefb8/seed_44/fold_10/attempt_20261030T114554_599132Z/fold_completion_summary.json",
+      "new_marker_sha256": "ce60a1c92cc676306084d208881ae1fe18b64e5eae378141f8a5e11752bd3971",
+      "old_dir": "05_FD001_grouped_cv/20261027T085136_896849Z/seed_44/fold_10"
+    }
+  ]
+}

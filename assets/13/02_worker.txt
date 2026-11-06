@@ -1,0 +1,70 @@
+"""One recorded FD001 fold: load saved AE, refit selected classical detectors, compare scores."""
+from pathlib import Path
+import json,sys,hashlib,traceback,platform
+
+
+def digest(path):
+    h=hashlib.sha256()
+    with Path(path).open('rb') as f:
+        for b in iter(lambda:f.read(1024*1024),b''):h.update(b)
+    return h.hexdigest()
+
+
+def require(condition,message):
+    if not bool(condition):raise ValueError(message)
+
+
+def project(config):
+    import numpy as np
+    import pandas as pd
+    import tensorflow as tf
+    from sklearn.preprocessing import StandardScaler
+    from sklearn.manifold import TSNE
+    from threadpoolctl import threadpool_limits
+
+    root = Path(config['project'])
+    revision = root / 'revision_outputs'
+    for relative, expected in config['known_hashes'].items():
+        require(digest(revision / relative) == expected, 'Kaynak değişmiş: ' + relative)
+    train = root / 'data/train_FD001.txt'
+    require(digest(train) == config['train_sha256'], 'FD001 eğitim dosyası değişmiş')
+    folder = revision / config['fold_relative_directory']
+    protocol = revision / '02_FD001_protocol'
+    meta = pd.read_csv(protocol/'train_evaluation_reference.csv')
+    roles = pd.read_csv(protocol/'engine_splits.csv')
+    split = roles.loc[roles.scheme.eq('cv') & roles.fold.eq(1)].set_index('engine_key', verify_integrity=True)
+    role = meta.engine_key.map(split.role)
+    require(role.notna().all() and split.role.value_counts().to_dict()=={'fit':70,'early_stop':10,'selection':10,'outer_valid':10}, 'Motor bölümü farklı')
+    raw = pd.read_csv(train, sep=r'\s+', header=None)
+    require(raw.shape==(20631,26) and np.array_equal(raw.iloc[:,:2],meta[['UnitNumber','Time']]), 'Satır eşlemesi başarısız')
+    sensors = raw.iloc[:,5:].to_numpy(dtype=np.float32)
+    fit, outer = role.eq('fit'), role.eq('outer_valid')
+    ref = meta.loc[outer,['sample_key','UnitNumber','Time','RUL','late_life_le_30']].copy()
+    require(ref.sample_key.is_unique and np.array_equal(ref.late_life_le_30,ref.RUL.le(30)), 'Referans uyuşmuyor')
+    stored = json.loads((folder/'scaler_parameters.json').read_text())
+    require(stored['input']['features']==[f'Sensor{i}' for i in range(1,22)], 'Sensör sırası farklı')
+    def scale(train_X, outer_X, name):
+        scaler = StandardScaler().fit(train_X)
+        for attr, key in [('mean_', 'mean'), ('scale_', 'scale')]:
+            np.testing.assert_allclose(getattr(scaler,attr),stored[name][key],rtol=1e-5,atol=1e-7)
+        return scaler.transform(train_X), scaler.transform(outer_X)
+    Xfit, Xouter = scale(sensors[fit],sensors[outer],'input')
+    tf.keras.utils.set_random_seed(42)
+    tf.config.experimental.enable_op_determinism()
+    encoder = tf.keras.models.load_model(folder/'encoder.keras',compile=False)
+    zfit, zouter = [encoder.predict(x,batch_size=256,verbose=0) for x in [Xfit,Xouter]]
+    _, Zouter = scale(zfit,zouter,'latent')
+    require(Xouter.shape==Zouter.shape==(len(ref),21),'Boyut uyuşmuyor')
+    settings=dict(n_components=2,perplexity=30,init='pca',learning_rate='auto',max_iter=1000,random_state=42,method='barnes_hut',metric='euclidean',n_jobs=1)
+    for name,values in [('raw',Xouter),('ae21',Zouter)]:
+        print('t-SNE:',name,flush=True)
+        with threadpool_limits(limits=1):
+            points=TSNE(**settings).fit_transform(values)
+        require(points.shape==(len(ref),2) and np.isfinite(points).all(),'Geçersiz koordinat')
+        ref[name+'_x'],ref[name+'_y']=points.T
+    return dict(status='PASS',dataset='FD001',seed=42,fold=1,role='outer_valid',settings=settings,engines=int(ref.UnitNumber.nunique()),observations=len(ref),records=ref.to_dict('records'))
+
+if __name__=='__main__':
+    config=json.loads(Path(sys.argv[1]).read_text())
+    result=project(config)
+    Path(sys.argv[2]).write_text(json.dumps(result,allow_nan=False))

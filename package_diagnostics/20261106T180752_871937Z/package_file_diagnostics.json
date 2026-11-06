@@ -1,0 +1,90 @@
+{
+  "stage": "16B_package_file_diagnostics",
+  "candidate_directory": "/Users/emredelibas/Documents/Akademik/Python/ServetMakale/Code_Release_Candidate",
+  "manifest_matches_delivered_package": true,
+  "manifest_sha256": "f0d109b064e3dc0270d39c04e46227a26248b01b6ed2e9aeb4618475cc3d900a",
+  "model_training_performed": false,
+  "existing_files_modified": false,
+  "experiment_source_hashes_rechecked": false,
+  "status": "PACKAGE_DETAILS_AVAILABLE",
+  "counts": {
+    "MISSING": 1,
+    "MATCH": 93
+  },
+  "issues": [
+    {
+      "path": ".gitignore",
+      "expected_sha256": "769e1b96c0deb381959a0d51296ac14448d738a413434b13e854e6a02d39e7d9",
+      "status": "MISSING"
+    }
+  ],
+  "folder_layout": {
+    ".": {
+      "exists": true,
+      "entries": [
+        ".DS_Store",
+        ".ipynb_checkpoints",
+        "00_Check_Recorded_Run.ipynb",
+        "16B_Check_Package_Files (1).ipynb",
+        "README.md",
+        "assets",
+        "environments",
+        "notebook_map.csv",
+        "notebooks",
+        "package_manifest.json",
+        "release_runtime.py",
+        "settings.example.json",
+        "source_audit.json",
+        "supplementary",
+        "tools",
+        "validation_summary.json"
+      ]
+    },
+    "notebooks": {
+      "exists": true,
+      "entries": [
+        "01_fd001_data_audit.ipynb",
+        "02B_recorded_run_audit.ipynb",
+        "02C_recorded_score_check.ipynb",
+        "02_fd001_engine_protocol.ipynb",
+        "03B_fd001_five_detector_pilot.ipynb",
+        "03_fd001_initial_pilot.ipynb",
+        "04_fd001_ae_pilot.ipynb",
+        "05B_fd001_five_detector_cv.ipynb",
+        "05_fd001_representation_cv.ipynb",
+        "06B_fd001_ae_five_detector_pilot.ipynb",
+        "06C_fd001_ae_five_detector_cv.ipynb",
+        "06_fd001_ae_ablation.ipynb",
+        "07B_fd001_pca_five_detector_pilot.ipynb",
+        "07C_fd001_pca_five_detector_cv.ipynb",
+        "07_fd001_pca_comparison.ipynb",
+        "08_additional_data_audit.ipynb",
+        "09_additional_engine_protocol.ipynb",
+        "10B1_additional_five_detector_pilot.ipynb",
+        "10B_additional_pilot_historical.ipynb",
+        "10C_additional_five_detector_cv.ipynb",
+        "10_additional_representations.ipynb",
+        "11_detector_roc.ipynb",
+        "12_fixed_selected_parameters.ipynb",
+        "13_representation_tsne.ipynb",
+        "14_detector_shap.ipynb",
+        "15A_sead_preflight.ipynb",
+        "15B_sead_training_pilot.ipynb",
+        "15C_sead_full_cv.ipynb"
+      ]
+    },
+    "supplementary": {
+      "exists": true,
+      "entries": [
+        "AP_F1_by_RUL_window.csv",
+        "README.md",
+        "SHA256SUMS.txt",
+        "Supplementary_Data_S1_RUL_Sensitivity.xlsx",
+        "aggregate_metrics.csv",
+        "fold_metrics.csv",
+        "source_provenance.json",
+        "verify_supplement.py"
+      ]
+    }
+  }
+}

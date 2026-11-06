@@ -1,0 +1,54 @@
+{
+  "protocols": [
+    {
+      "directory": "02_FD001_protocol",
+      "files": {
+        "experiment_protocol.json": "0bd6c241f0e50cdd3c00888d62840649a06f21ca7583fb59ecffedc01979d056",
+        "engine_splits.csv": "53c2ed564fcded8e502f307c0011aa1cd12ebd03b4429882e1fdf142466f7c45",
+        "train_evaluation_reference.csv": "c6b5e08384280fb687b188723fa7ecf7e76254a9ec20fc606be206f8de7a27e8",
+        "role_summary.csv": "a31fb6ead724b9190cb2a3de692c4f189f27d3cc589274c38fe65b2cffca82d7"
+      }
+    },
+    {
+      "directory": "09_FD002_FD003_protocol",
+      "files": {
+        "experiment_protocol.json": "bdc3a15884547c7d02e6fd84cf903212372b06c41277867c9928b13a3c54d719",
+        "engine_splits.csv": "fe1c82b503a613a40fe379de980fadefc17ea3464e2dda6b8f69b07a3fcdefe4",
+        "role_summary.csv": "195395f48a1ddc4408458149aac9efb091ce9a0ed02710314443b03545467da8",
+        "FD002/train_evaluation_reference.csv": "0cdcfd9004a789a5c619a76eb65a8802e74ebc1572dc3186b72ac6361105ee45",
+        "FD003/train_evaluation_reference.csv": "4b4ffa35c7a111ceb9b0c1a0da690b7a7e07a69ed11e09a5d3f381898e036a1a"
+      }
+    }
+  ],
+  "train_files": {
+    "train_FD001.txt": "963b5e22825b34d8b21c69e1aeb4af3e647050eb672ee8834ba4b5d91d2de0f8",
+    "train_FD002.txt": "dac6c4dbc4e7c1bdeb5747da3d313d05c395bb99801b44a002b26a2ba13d788f",
+    "train_FD003.txt": "2abbe9968cc5e8eb091980f51b20f62bb4127336d3482cb52071d53bf23329e2"
+  },
+  "stages": [
+    {
+      "stage": "05",
+      "directory": "05_FD001_grouped_cv",
+      "summary_name": "cv_summary.json",
+      "summary_canonical_sha256": "07543712f1847f4a2f2859c3050df96f711218021474bc820b1c47fdf4895cb1"
+    },
+    {
+      "stage": "06",
+      "directory": "06_FD001_AE_ablation",
+      "summary_name": "ablation_summary.json",
+      "summary_canonical_sha256": "1dd41b77229d468fbbf155b7b4647fea2900ec729b2c7dd8f2dab8c2d890084d"
+    },
+    {
+      "stage": "07",
+      "directory": "07_FD001_PCA_comparison",
+      "summary_name": "pca_summary.json",
+      "summary_canonical_sha256": "abbd3694d70c6315f60ea91e27a42657a2e523ee10b204b1ddec8508c33843a1"
+    },
+    {
+      "stage": "10",
+      "directory": "10_FD002_FD003_grouped_cv",
+      "summary_name": "additional_cv_summary.json",
+      "summary_canonical_sha256": "01382df1aee1ee896a3eb4b0d3f2541d510a8de2daea23daaf793a0bc661ddf7"
+    }
+  ]
+}

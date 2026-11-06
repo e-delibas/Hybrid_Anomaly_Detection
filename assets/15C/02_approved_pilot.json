@@ -1,0 +1,763 @@
+{
+  "status": "PASS_PILOT",
+  "stage": "15B_training_and_selection_only",
+  "plan_sha256": "8fa90ec6a90834dda8bfd8692d52efee26824b734cd45bc57e8af49b23972fe9",
+  "plan": {
+    "id": "SEAD_FD001_pilot_v1",
+    "dataset": "FD001",
+    "fold": 1,
+    "seed": 42,
+    "purpose": "Training and selection pilot. Outer features are not exported to any model worker.",
+    "preflight_sha256": "d22343c545692599b1695b49e4aad8c2b3ce3c9b6abfbe2d876229d8b1458705",
+    "required_hashes": {
+      "data/train_FD001.txt": "963b5e22825b34d8b21c69e1aeb4af3e647050eb672ee8834ba4b5d91d2de0f8",
+      "revision_outputs/02_FD001_protocol/experiment_protocol.json": "0bd6c241f0e50cdd3c00888d62840649a06f21ca7583fb59ecffedc01979d056",
+      "revision_outputs/02_FD001_protocol/engine_splits.csv": "53c2ed564fcded8e502f307c0011aa1cd12ebd03b4429882e1fdf142466f7c45",
+      "revision_outputs/02_FD001_protocol/train_evaluation_reference.csv": "c6b5e08384280fb687b188723fa7ecf7e76254a9ec20fc606be206f8de7a27e8",
+      "revision_outputs/02_FD001_protocol/role_summary.csv": "a31fb6ead724b9190cb2a3de692c4f189f27d3cc589274c38fe65b2cffca82d7"
+    },
+    "source_audit": {
+      "upstream_repository": "https://github.com/pumpkinyouge/SEAD-Net",
+      "commit": "edd3162d949fe1e005721c7c400c5f52852ab6ae",
+      "paper_doi": "10.1109/TNSM.2026.3694683",
+      "inspected_source_hashes": {
+        "src/main.py": "2a118f1886978e50d0985cf59e3aaf8ef5a43607cc871a51ee0bbe7b292f1728",
+        "src/train.py": "facbe0492e0bc1dda5f81d005d49285604d5897ee483abaa74bbe51e2e69bc7b",
+        "src/model/network.py": "93df3821675b2f3334f1e15c3cc87ba4ee5adb94ae92267b32977e91e99d0ad4",
+        "src/model/SEAD.py": "0ca7618de8a646673f46300713854d678f2830fd84820ad563eb31162fd5f72f",
+        "src/datasets.py": "84cd9c3843653b5f4edd769142519d18e6c7a2a864085a1b9a3bcd8bf665a08d",
+        "src/utils.py": "7bc0d318fc875bddc6aa4a5f87fc31318473c8fe5005b576c801cee96f801fa3",
+        "src/optimisers.py": "f3a25ac4dfaa2aa1032086c60435fc376392de647d15106c2a069743cd7f47c6",
+        "config.conf": "aa6ee1e9e74ff4a2097d1d3b7ddcf938921a8ee8ca9600843c0bf780c7e44f78",
+        "Supplementary Material.pdf": "6600b433be5a6da84d2337082ca68bae37b177813758d8bb714e1d061010f118"
+      },
+      "comparison_status": "NOT_RUN",
+      "original_detector_count_preserved": 5,
+      "source_differences": [
+        "test_set_checkpoint_selection",
+        "all_data_anomaly_pool_for_training_noise",
+        "normalized_residual_norm_in_second_stage_loss",
+        "L2_vs_MSE_pretrain",
+        "lambda_convention_reversed_in_supplement",
+        "runtime_epochs_differ_from_supplement",
+        "CUDA_specific_calls"
+      ]
+    },
+    "torch_versions": {
+      "python": "3.13.5",
+      "torch": "2.11.0",
+      "numpy": "2.1.3"
+    },
+    "classical_versions": {
+      "python": "3.12.16",
+      "numpy": "2.1.3",
+      "pandas": "2.2.3",
+      "scikit-learn": "1.6.1"
+    },
+    "training": {
+      "latent_dim": 64,
+      "widths": [
+        256,
+        128
+      ],
+      "projection_dim": 2,
+      "activation": "none (released affine architecture)",
+      "pretrain_epochs": 200,
+      "finetune_epochs": 50,
+      "batch_size": 512,
+      "batches_per_epoch": 20,
+      "learning_rate": 0.01,
+      "weight_decay": 1e-06,
+      "warmup_epochs": 5,
+      "queue_size": 65536,
+      "momentum": 0.99,
+      "temperature": 0.07,
+      "contrastive_weight": 9e-06,
+      "noise_std": 0.05,
+      "mask_probability": 0.05,
+      "margin": 1.5,
+      "stage2_variants": [
+        "raw_error",
+        "unit_direction_control"
+      ],
+      "primary_variant": "raw_error"
+    },
+    "training_data": "all fit cycles; none removed using hidden RUL; all unlabeled for stage1; only 30 positives disclosed for stage2",
+    "pretraining_loss": "(1-c)*mean_squared_reconstruction_error+c*InfoNCE; c=9e-6 (released-code convention)",
+    "stage2_loss": "mean[(1-y)*(abs(score)+e)+y*(relu(1.5-score)+relu(1.5-e))]; primary e=raw L2 residual",
+    "source_loss_control": "same initialization, 30 labels and batch RNG; e=norm(normalized residual direction) as released code",
+    "selection": "stage1 epoch=min unaugmented early_stop MSE; stage2 epoch=max selection AP (first exact tie); detector=max selection AP (first exact tie); threshold=max selection F1 (highest threshold within 1e-12)",
+    "detectors": [
+      "DBSCAN",
+      "IF",
+      "LOF",
+      "OC-SVM",
+      "kNN"
+    ],
+    "candidate_counts": {
+      "DBSCAN": 9,
+      "IF": 3,
+      "LOF": 3,
+      "OC-SVM": 9,
+      "kNN": 3
+    },
+    "candidate_policy": "every candidate attempted and recorded; invalid candidate makes pilot REVIEW_REQUIRED; none silently dropped",
+    "stage_timeout_seconds": 14400,
+    "adaptations": [
+      "21 C-MAPSS sensor inputs; source hidden widths256/128, latent64, projection2 retained",
+      "source64 is an expansion of21, not a dimension-matched AE/PCA ablation",
+      "C-MAPSS augmentation: independent Gaussian noise std0.05 then zero-mask p0.05; no sensor permutation/cropping",
+      "fit-only input and SCLM-output standardization; output scaling only for classical detectors",
+      "all fit samples retained; no synthetic2percent contamination; 30 positives from30 fit engines",
+      "200/50 epochs per supplement;20 batches per epoch per released sampler; fresh resampling each epoch",
+      "separate early_stop and selection engines; no outer use; no source test-driven checkpoint choice",
+      "raw-error stage2 as Eq24 plus separately named unit-direction source-loss control",
+      "MSE pretrain convention follows released code; not Eq21 L2 norm; explicit contrastive coefficient direction",
+      "zero-residual numerical guard; CPU portability; separate stage-correct cosine horizons",
+      "released linear score is not a calibrated probability; no sigmoid or hidden activations added"
+    ],
+    "status": "CONFIGURATION_FIXED_BEFORE_NEW_OUTER_EVALUATION; not retrospective preregistration of entire article",
+    "implementation_sha256": {
+      "source_check.py": "c942f87fd22b4679075c78314cfd6685f63c4e97569559d09778cbe69e51388e",
+      "prepare_data.py": "912280229f942627965e48a1bae5c24155db92c5c56d0aca9f9f97ec225e02d8",
+      "train_sead.py": "426c2e076977011f01f72cb604d9e8a0469a6f6099157e681279dce32d5af3ab",
+      "detector_core.py": "bdfc72a1089905160934237300cd59d92619dd326fcc82cea23f0755c0cb900d",
+      "select_detectors.py": "46281c428d8fd630cb356cc4d62d5aa2eb9fe0a509fadf6536bb032521dd6b38"
+    }
+  },
+  "outer_evaluation_performed": false,
+  "original_detector_count_preserved": 5,
+  "environments": {
+    "torch": {
+      "executable": "/opt/anaconda3/bin/python",
+      "versions": {
+        "python": "3.13.5",
+        "torch": "2.11.0",
+        "numpy": "2.1.3",
+        "pandas": "2.2.3",
+        "scikit-learn": "1.6.1",
+        "scipy": "1.15.3",
+        "joblib": "1.4.2"
+      }
+    },
+    "classical": {
+      "executable": "/opt/anaconda3/envs/cmapss-revision/bin/python",
+      "versions": {
+        "python": "3.12.16",
+        "torch": null,
+        "numpy": "2.1.3",
+        "pandas": "2.2.3",
+        "scikit-learn": "1.6.1",
+        "scipy": "1.18.1",
+        "joblib": "1.6.0"
+      }
+    }
+  },
+  "preparation": {
+    "files": [
+      {
+        "relative_path": "data/train_FD001.txt",
+        "expected_sha256": "963b5e22825b34d8b21c69e1aeb4af3e647050eb672ee8834ba4b5d91d2de0f8",
+        "sha256": "963b5e22825b34d8b21c69e1aeb4af3e647050eb672ee8834ba4b5d91d2de0f8",
+        "status": "MATCH"
+      },
+      {
+        "relative_path": "revision_outputs/02_FD001_protocol/experiment_protocol.json",
+        "expected_sha256": "0bd6c241f0e50cdd3c00888d62840649a06f21ca7583fb59ecffedc01979d056",
+        "sha256": "0bd6c241f0e50cdd3c00888d62840649a06f21ca7583fb59ecffedc01979d056",
+        "status": "MATCH"
+      },
+      {
+        "relative_path": "revision_outputs/02_FD001_protocol/engine_splits.csv",
+        "expected_sha256": "53c2ed564fcded8e502f307c0011aa1cd12ebd03b4429882e1fdf142466f7c45",
+        "sha256": "53c2ed564fcded8e502f307c0011aa1cd12ebd03b4429882e1fdf142466f7c45",
+        "status": "MATCH"
+      },
+      {
+        "relative_path": "revision_outputs/02_FD001_protocol/train_evaluation_reference.csv",
+        "expected_sha256": "c6b5e08384280fb687b188723fa7ecf7e76254a9ec20fc606be206f8de7a27e8",
+        "sha256": "c6b5e08384280fb687b188723fa7ecf7e76254a9ec20fc606be206f8de7a27e8",
+        "status": "MATCH"
+      },
+      {
+        "relative_path": "revision_outputs/02_FD001_protocol/role_summary.csv",
+        "expected_sha256": "a31fb6ead724b9190cb2a3de692c4f189f27d3cc589274c38fe65b2cffca82d7",
+        "sha256": "a31fb6ead724b9190cb2a3de692c4f189f27d3cc589274c38fe65b2cffca82d7",
+        "status": "MATCH"
+      }
+    ],
+    "status": "PASS_PREPARE",
+    "folds": [
+      {
+        "fold": 1,
+        "engine_counts": {
+          "fit": 70,
+          "selection": 10,
+          "outer_valid": 10,
+          "early_stop": 10
+        },
+        "row_counts": {
+          "fit": 14137,
+          "early_stop": 2234,
+          "outer_valid": 2139,
+          "selection": 2121
+        },
+        "fit_engines_eligible_for_30_proxy_labels": 70
+      },
+      {
+        "fold": 2,
+        "engine_counts": {
+          "outer_valid": 10,
+          "fit": 70,
+          "selection": 10,
+          "early_stop": 10
+        },
+        "row_counts": {
+          "outer_valid": 2200,
+          "fit": 14256,
+          "early_stop": 1953,
+          "selection": 2222
+        },
+        "fit_engines_eligible_for_30_proxy_labels": 70
+      },
+      {
+        "fold": 3,
+        "engine_counts": {
+          "early_stop": 10,
+          "fit": 70,
+          "outer_valid": 10,
+          "selection": 10
+        },
+        "row_counts": {
+          "early_stop": 2288,
+          "fit": 14072,
+          "selection": 2222,
+          "outer_valid": 2049
+        },
+        "fit_engines_eligible_for_30_proxy_labels": 70
+      },
+      {
+        "fold": 4,
+        "engine_counts": {
+          "selection": 10,
+          "fit": 70,
+          "early_stop": 10,
+          "outer_valid": 10
+        },
+        "row_counts": {
+          "selection": 1944,
+          "fit": 14651,
+          "early_stop": 1855,
+          "outer_valid": 2181
+        },
+        "fit_engines_eligible_for_30_proxy_labels": 70
+      },
+      {
+        "fold": 5,
+        "engine_counts": {
+          "fit": 70,
+          "selection": 10,
+          "outer_valid": 10,
+          "early_stop": 10
+        },
+        "row_counts": {
+          "fit": 14449,
+          "early_stop": 2053,
+          "outer_valid": 2087,
+          "selection": 2042
+        },
+        "fit_engines_eligible_for_30_proxy_labels": 70
+      },
+      {
+        "fold": 6,
+        "engine_counts": {
+          "early_stop": 10,
+          "fit": 70,
+          "selection": 10,
+          "outer_valid": 10
+        },
+        "row_counts": {
+          "early_stop": 2177,
+          "fit": 14144,
+          "selection": 2376,
+          "outer_valid": 1934
+        },
+        "fit_engines_eligible_for_30_proxy_labels": 70
+      },
+      {
+        "fold": 7,
+        "engine_counts": {
+          "early_stop": 10,
+          "fit": 70,
+          "outer_valid": 10,
+          "selection": 10
+        },
+        "row_counts": {
+          "early_stop": 2102,
+          "fit": 14125,
+          "outer_valid": 1910,
+          "selection": 2494
+        },
+        "fit_engines_eligible_for_30_proxy_labels": 70
+      },
+      {
+        "fold": 8,
+        "engine_counts": {
+          "fit": 70,
+          "selection": 10,
+          "early_stop": 10,
+          "outer_valid": 10
+        },
+        "row_counts": {
+          "fit": 14674,
+          "selection": 2070,
+          "outer_valid": 2063,
+          "early_stop": 1824
+        },
+        "fit_engines_eligible_for_30_proxy_labels": 70
+      },
+      {
+        "fold": 9,
+        "engine_counts": {
+          "fit": 70,
+          "selection": 10,
+          "early_stop": 10,
+          "outer_valid": 10
+        },
+        "row_counts": {
+          "fit": 14669,
+          "early_stop": 1931,
+          "selection": 2143,
+          "outer_valid": 1888
+        },
+        "fit_engines_eligible_for_30_proxy_labels": 70
+      },
+      {
+        "fold": 10,
+        "engine_counts": {
+          "fit": 70,
+          "selection": 10,
+          "outer_valid": 10,
+          "early_stop": 10
+        },
+        "row_counts": {
+          "fit": 14523,
+          "outer_valid": 2180,
+          "selection": 1872,
+          "early_stop": 2056
+        },
+        "fit_engines_eligible_for_30_proxy_labels": 70
+      }
+    ],
+    "n_cycles": 20631,
+    "n_engines": 100,
+    "label_definition": "RUL <= 30; model-independent late-life proxy, not annotated anomaly onset",
+    "fold": 1,
+    "seed": 42,
+    "training_label_budget": 30,
+    "known_positive_samples": [
+      {
+        "engine_key": "FD001:train:61",
+        "sample_key": "FD001:train:61:176",
+        "RUL": 9
+      },
+      {
+        "engine_key": "FD001:train:42",
+        "sample_key": "FD001:train:42:194",
+        "RUL": 2
+      },
+      {
+        "engine_key": "FD001:train:63",
+        "sample_key": "FD001:train:63:167",
+        "RUL": 7
+      },
+      {
+        "engine_key": "FD001:train:59",
+        "sample_key": "FD001:train:59:212",
+        "RUL": 19
+      },
+      {
+        "engine_key": "FD001:train:13",
+        "sample_key": "FD001:train:13:162",
+        "RUL": 1
+      },
+      {
+        "engine_key": "FD001:train:71",
+        "sample_key": "FD001:train:71:190",
+        "RUL": 18
+      },
+      {
+        "engine_key": "FD001:train:24",
+        "sample_key": "FD001:train:24:127",
+        "RUL": 20
+      },
+      {
+        "engine_key": "FD001:train:97",
+        "sample_key": "FD001:train:97:200",
+        "RUL": 2
+      },
+      {
+        "engine_key": "FD001:train:78",
+        "sample_key": "FD001:train:78:212",
+        "RUL": 19
+      },
+      {
+        "engine_key": "FD001:train:51",
+        "sample_key": "FD001:train:51:185",
+        "RUL": 28
+      },
+      {
+        "engine_key": "FD001:train:19",
+        "sample_key": "FD001:train:19:142",
+        "RUL": 16
+      },
+      {
+        "engine_key": "FD001:train:22",
+        "sample_key": "FD001:train:22:196",
+        "RUL": 6
+      },
+      {
+        "engine_key": "FD001:train:72",
+        "sample_key": "FD001:train:72:188",
+        "RUL": 25
+      },
+      {
+        "engine_key": "FD001:train:46",
+        "sample_key": "FD001:train:46:240",
+        "RUL": 16
+      },
+      {
+        "engine_key": "FD001:train:82",
+        "sample_key": "FD001:train:82:188",
+        "RUL": 26
+      },
+      {
+        "engine_key": "FD001:train:93",
+        "sample_key": "FD001:train:93:146",
+        "RUL": 9
+      },
+      {
+        "engine_key": "FD001:train:38",
+        "sample_key": "FD001:train:38:178",
+        "RUL": 16
+      },
+      {
+        "engine_key": "FD001:train:58",
+        "sample_key": "FD001:train:58:127",
+        "RUL": 20
+      },
+      {
+        "engine_key": "FD001:train:95",
+        "sample_key": "FD001:train:95:260",
+        "RUL": 23
+      },
+      {
+        "engine_key": "FD001:train:34",
+        "sample_key": "FD001:train:34:182",
+        "RUL": 13
+      },
+      {
+        "engine_key": "FD001:train:49",
+        "sample_key": "FD001:train:49:205",
+        "RUL": 10
+      },
+      {
+        "engine_key": "FD001:train:57",
+        "sample_key": "FD001:train:57:136",
+        "RUL": 1
+      },
+      {
+        "engine_key": "FD001:train:43",
+        "sample_key": "FD001:train:43:190",
+        "RUL": 17
+      },
+      {
+        "engine_key": "FD001:train:47",
+        "sample_key": "FD001:train:47:188",
+        "RUL": 26
+      },
+      {
+        "engine_key": "FD001:train:5",
+        "sample_key": "FD001:train:5:264",
+        "RUL": 5
+      },
+      {
+        "engine_key": "FD001:train:83",
+        "sample_key": "FD001:train:83:282",
+        "RUL": 11
+      },
+      {
+        "engine_key": "FD001:train:77",
+        "sample_key": "FD001:train:77:145",
+        "RUL": 9
+      },
+      {
+        "engine_key": "FD001:train:44",
+        "sample_key": "FD001:train:44:165",
+        "RUL": 27
+      },
+      {
+        "engine_key": "FD001:train:15",
+        "sample_key": "FD001:train:15:186",
+        "RUL": 21
+      },
+      {
+        "engine_key": "FD001:train:60",
+        "sample_key": "FD001:train:60:165",
+        "RUL": 7
+      }
+    ],
+    "other_fit_samples": "retained as unlabelled; no true-label-based cleaning",
+    "exported_roles": [
+      "fit",
+      "early_stop",
+      "selection"
+    ],
+    "outer_data_exported": false,
+    "input_standardization": "StandardScaler fitted on fitting engines only; 21 sensor columns in original order",
+    "versions": {
+      "python": "3.12.16",
+      "numpy": "2.1.3",
+      "pandas": "2.2.3",
+      "scikit-learn": "1.6.1",
+      "scipy": "1.18.1",
+      "joblib": "1.6.0"
+    },
+    "prepared_sha256": "ae9f9892e5649e9c4a8255fccb020a559f85deccdd6844be2f20516aafd26223"
+  },
+  "training": {
+    "status": "PASS_TRAINING",
+    "fold": 1,
+    "seed": 42,
+    "pretrain_best_epoch": 12,
+    "pretrain_early_stop_MSE": 4.4065516703994945e-05,
+    "pretrain_encoder_squared_parameter_change": 104.92414763569832,
+    "stage2": {
+      "raw_error": {
+        "selected_epoch": 9,
+        "selection_AP": 0.9407611352338013,
+        "encoder_squared_parameter_change": 113.3428687993437,
+        "score_min": -0.3053278923034668,
+        "score_max": 5.722351551055908,
+        "checkpoint_score_reproduced": true
+      },
+      "unit_direction_control": {
+        "selected_epoch": 3,
+        "selection_AP": 0.9444779530945058,
+        "encoder_squared_parameter_change": 30.848883656784892,
+        "score_min": -0.14975506067276,
+        "score_max": 6.320180416107178,
+        "checkpoint_score_reproduced": true
+      }
+    },
+    "outer_evaluation_performed": false,
+    "device": "cpu",
+    "threads": 1,
+    "python": "3.13.5",
+    "torch": "2.11.0",
+    "numpy": "2.1.3",
+    "elapsed_seconds": 882.0885291249724,
+    "architecture": {
+      "latent_dim": 64,
+      "widths": [
+        256,
+        128
+      ],
+      "projection_dim": 2,
+      "activation": "none (released affine architecture)",
+      "pretrain_epochs": 200,
+      "finetune_epochs": 50,
+      "batch_size": 512,
+      "batches_per_epoch": 20,
+      "learning_rate": 0.01,
+      "weight_decay": 1e-06,
+      "warmup_epochs": 5,
+      "queue_size": 65536,
+      "momentum": 0.99,
+      "temperature": 0.07,
+      "contrastive_weight": 9e-06,
+      "noise_std": 0.05,
+      "mask_probability": 0.05,
+      "margin": 1.5,
+      "stage2_variants": [
+        "raw_error",
+        "unit_direction_control"
+      ],
+      "primary_variant": "raw_error"
+    },
+    "trained_outputs_sha256": "c6c6b3744fa630504d48dd23b3d180cd8087add68d0d3aa0abb4e1e39a4e4b90"
+  },
+  "selection": {
+    "status": "PASS_SELECTION",
+    "detectors": [
+      "DBSCAN",
+      "IF",
+      "LOF",
+      "OC-SVM",
+      "kNN"
+    ],
+    "candidate_count": 27,
+    "all_candidates_valid": true,
+    "selected_detectors": [
+      {
+        "representation": "SCLM_pretrained_d64",
+        "method": "DBSCAN",
+        "selected_params": {
+          "min_samples": 20,
+          "eps_quantile": 0.5,
+          "eps": 4.555770901164069
+        },
+        "selected_candidate_order": 0,
+        "selection_AP": 0.43609354480597645,
+        "selection_ROC_AUC": 0.7840651217470298,
+        "selection_F1": 0.4629156010230179,
+        "threshold": 0.9286582625477987,
+        "selection_TP": 181,
+        "selection_FP": 291,
+        "selection_TN": 1520,
+        "selection_FN": 129,
+        "checkpoint_score_reproduced": true
+      },
+      {
+        "representation": "SCLM_pretrained_d64",
+        "method": "IF",
+        "selected_params": {
+          "n_estimators": 200
+        },
+        "selected_candidate_order": 1,
+        "selection_AP": 0.5118263850607249,
+        "selection_ROC_AUC": 0.8860030993391639,
+        "selection_F1": 0.616,
+        "threshold": 0.44632394488035876,
+        "selection_TP": 231,
+        "selection_FP": 209,
+        "selection_TN": 1602,
+        "selection_FN": 79,
+        "checkpoint_score_reproduced": true
+      },
+      {
+        "representation": "SCLM_pretrained_d64",
+        "method": "LOF",
+        "selected_params": {
+          "n_neighbors": 100
+        },
+        "selected_candidate_order": 2,
+        "selection_AP": 0.19038400362071375,
+        "selection_ROC_AUC": 0.5880283571721202,
+        "selection_F1": 0.278494623655914,
+        "threshold": 1.0150221586227417,
+        "selection_TP": 259,
+        "selection_FP": 1291,
+        "selection_TN": 520,
+        "selection_FN": 51,
+        "checkpoint_score_reproduced": true
+      },
+      {
+        "representation": "SCLM_pretrained_d64",
+        "method": "OC-SVM",
+        "selected_params": {
+          "nu": 0.1,
+          "gamma": 0.0001
+        },
+        "selected_candidate_order": 6,
+        "selection_AP": 0.36184855182559694,
+        "selection_ROC_AUC": 0.7572896813380595,
+        "selection_F1": 0.46296296296296297,
+        "threshold": -1373.554925631749,
+        "selection_TP": 175,
+        "selection_FP": 271,
+        "selection_TN": 1540,
+        "selection_FN": 135,
+        "checkpoint_score_reproduced": true
+      },
+      {
+        "representation": "SCLM_pretrained_d64",
+        "method": "kNN",
+        "selected_params": {
+          "n_neighbors": 100
+        },
+        "selected_candidate_order": 2,
+        "selection_AP": 0.4405608802667138,
+        "selection_ROC_AUC": 0.8216633120179547,
+        "selection_F1": 0.4749679075738126,
+        "threshold": 6.003824710845947,
+        "selection_TP": 185,
+        "selection_FP": 284,
+        "selection_TN": 1527,
+        "selection_FN": 125,
+        "checkpoint_score_reproduced": true
+      }
+    ],
+    "standalone": [
+      {
+        "method": "SEAD_adapted_raw_error",
+        "primary": true,
+        "selected_epoch": 9,
+        "selection_AP": 0.9407611352338013,
+        "selection_ROC_AUC": 0.98544379330614,
+        "selection_F1": 0.8652246256239601,
+        "threshold": 1.2298108339309692,
+        "selection_TP": 260,
+        "selection_FP": 31,
+        "selection_TN": 1780,
+        "selection_FN": 50
+      },
+      {
+        "method": "SEAD_adapted_unit_direction_control",
+        "primary": false,
+        "selected_epoch": 3,
+        "selection_AP": 0.9444779530945061,
+        "selection_ROC_AUC": 0.9837605315188543,
+        "selection_F1": 0.8735632183908046,
+        "threshold": 1.2126924991607666,
+        "selection_TP": 266,
+        "selection_FP": 33,
+        "selection_TN": 1778,
+        "selection_FN": 44
+      }
+    ],
+    "fold": 1,
+    "seed": 42,
+    "late_life_reference": "RUL <= 30",
+    "outer_evaluation_performed": false,
+    "warning": "All metrics in this file are selection-set diagnostics, not held-out generalization estimates.",
+    "versions": {
+      "python": "3.12.16",
+      "numpy": "2.1.3",
+      "pandas": "2.2.3",
+      "scikit-learn": "1.6.1",
+      "scipy": "1.18.1",
+      "joblib": "1.6.0"
+    },
+    "elapsed_seconds": 71.21272900002077
+  },
+  "interpretation": "Training/selection pilot only; no held-out performance claim. Fixed source-loss control is not another classical detector.",
+  "artifact_sha256": {
+    "detector_DBSCAN.joblib": "c1ba6e085e5a489e26ddc7546c44f80a817f5a5d004fe9b2ed9d7b54ec0fe88e",
+    "detector_IF.joblib": "e3fb02a46ecf1a1fa441295d4fef0b5aa381e5115e719815ff9a125b8bb4afb8",
+    "detector_LOF.joblib": "1ac6e6077f90dcf569f6b65b10c7181257bc9bdd0bb2e2074f2741a0365aebb5",
+    "detector_OC_SVM.joblib": "240a511170a7b3f7d17137f1abf9c7a15436fd2e818e2b566176ff8be45c0983",
+    "detector_core.py": "bdfc72a1089905160934237300cd59d92619dd326fcc82cea23f0755c0cb900d",
+    "detector_kNN.joblib": "271741c81c4516b486cf928081e27642d7654b5e140d8db2d88f6f1e6fe876be",
+    "detector_trials.json": "e25552bc8db30b7bd84010323821bd9e09875c63c4131223738817be3951917c",
+    "plan.json": "f49f48f4feaafba7f8096dc06f48a1807735474407d3ecfbb0b76f3887fd8c49",
+    "prepare_data.py": "912280229f942627965e48a1bae5c24155db92c5c56d0aca9f9f97ec225e02d8",
+    "prepare_data_completed.json": "cd16d2cc3763bc6327dff8ffd56239c2233f6e912b5d61fdf3270cd3868d4b8a",
+    "prepare_summary.json": "f5b83fb777b4c58d9ba78069f49dce69792690d7f12ff2532d8eb4fd73e010cf",
+    "prepared_data.npz": "ae9f9892e5649e9c4a8255fccb020a559f85deccdd6844be2f20516aafd26223",
+    "sclm_best.pt": "36cb1eb8be7cbdc6712a507b8cad927518afea54e4670da8fc89faa15d20ac86",
+    "sclm_latent_scaler.joblib": "96bb7271e656b5513099bb24a09a295e7f3d5f387e3d0e04c54492f20fc97e24",
+    "sead_raw_error_best.pt": "aee73144b3e6aa653e402c3e3ddfdb23d7a41e2b01758196965ca5a48e675dd8",
+    "sead_unit_direction_control_best.pt": "0f53135663c5451d668e321d868f216555502cd921b87d4d6fe8418b85e1b82c",
+    "select_detectors.py": "46281c428d8fd630cb356cc4d62d5aa2eb9fe0a509fadf6536bb032521dd6b38",
+    "select_detectors_completed.json": "ba0e22ef7851f8bbbbb03c408bdf36fff0cb134ed93ad85b6019170f164288c0",
+    "selection_scores.npz": "54fc29172732f7737d2ad192a62eba29ba1606d507243683cac891d97623cde8",
+    "selection_summary.json": "48e0391efb7965e4d1e13e6f02b5646dbe8360fc54ba61a6e0545f15a4b5503e",
+    "source_check.py": "c942f87fd22b4679075c78314cfd6685f63c4e97569559d09778cbe69e51388e",
+    "train_sead.py": "426c2e076977011f01f72cb604d9e8a0469a6f6099157e681279dce32d5af3ab",
+    "train_sead_completed.json": "c12f4e225f006c74d8f6dab5dab0374ec168f8c1a0349e4883083088a92739ea",
+    "trained_outputs.npz": "c6c6b3744fa630504d48dd23b3d180cd8087add68d0d3aa0abb4e1e39a4e4b90",
+    "training_history.json": "24ada6fd6f01e284badf0e3a67e8bfabb2c7fe589d84ac8bd7fc8b7b60735a8c",
+    "training_summary.json": "4e4f8e5554be8c21aeb0452721e4070055561a73272fe3e3e3f9f1497385b8c6"
+  }
+}

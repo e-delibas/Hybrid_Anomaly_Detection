@@ -1,0 +1,716 @@
+{
+  "stage": "06B_ablation_five_method_pilot",
+  "expected_versions": {
+    "python": "3.12.16",
+    "numpy": "2.1.3",
+    "pandas": "2.2.3",
+    "sklearn": "1.6.1",
+    "tensorflow": "2.21.0"
+  },
+  "five_method_addendum": {
+    "id": "five_detector_completion_v1_pilot",
+    "scope": "FD001 outer fold1 seed42; Raw and saved AE_latent21; MSE additional control",
+    "original_detectors": [
+      "DBSCAN",
+      "IF",
+      "LOF",
+      "OC-SVM",
+      "kNN"
+    ],
+    "new_methods": [
+      "DBSCAN",
+      "OC-SVM"
+    ],
+    "representations": [
+      "Raw",
+      "AE_latent21"
+    ],
+    "reuse": "Stage05 selected IF/LOF/kNN results and MSE only after in-run baseline score reproduction; saved AE is not re-trained",
+    "roles": "Same 70 fit / 10 early_stop / 10 selection / 10 outer engines from immutable stage02; model/scaler fits use fitting engines only",
+    "primary_reference": "RUL<=30 late-life proxy, not independent annotated fault onset",
+    "sensitivity_windows": [
+      20,
+      40
+    ],
+    "selection": "max selection AP; exact ties keep first candidate; threshold=max positive-class selection F1 with 1e-12 tie tolerance choosing highest threshold",
+    "prediction": "score >= selection threshold",
+    "new_detector_numeric_dtype": "float64; reused Raw/AE representation generation unchanged",
+    "DBSCAN": {
+      "min_samples": [
+        20,
+        50,
+        100
+      ],
+      "eps_quantiles": [
+        0.5,
+        0.75,
+        0.9
+      ],
+      "eps_rule": "fit-only q quantile (linear interpolation) of Euclidean mth-neighbor distance, explicitly including self in count",
+      "fixed": {
+        "metric": "euclidean",
+        "algorithm": "ball_tree",
+        "n_jobs": -1
+      },
+      "score": "minimum Euclidean distance from query to frozen fit-set DBSCAN core samples divided by eps",
+      "variant": "DBSCAN_core_distance_v1",
+      "no_query_refit": true,
+      "diagnostic_rule": "score > 1 (outside all fixed core epsilon balls); not native DBSCAN predict; reported separately from selection-F1 threshold"
+    },
+    "OC-SVM": {
+      "nu": [
+        0.01,
+        0.05,
+        0.1
+      ],
+      "gamma": [
+        0.0001,
+        0.01,
+        "scale"
+      ],
+      "fixed": {
+        "kernel": "rbf",
+        "tol": 0.001,
+        "cache_size": 512,
+        "shrinking": true,
+        "max_iter": 100000
+      },
+      "score": "negative score_samples"
+    },
+    "resources": {
+      "max_dbscan_neighbor_entries": 20000000,
+      "worker_timeout_seconds": 3600,
+      "policy": "resource limit aborts entire pilot; candidates are not silently dropped for memory; undefined/no-convergence candidates are logged and cause REVIEW_REQUIRED_CANDIDATES"
+    },
+    "candidate_count": {
+      "DBSCAN_per_representation": 9,
+      "OC-SVM_per_representation": 9,
+      "new_total": 36
+    },
+    "scope_counts": {
+      "primary_groups": 11,
+      "metrics_all_three_windows": 33
+    },
+    "transparency": [
+      "DBSCAN out-of-sample scoring is an explicit core-distance extension, not a native predict API.",
+      "Original notebook fit DBSCAN on the test batch; this pilot does not preserve that transductive behavior.",
+      "Limited follow-up grids are frozen before this pilot, after prior outer results were already observed; not original preregistration.",
+      "Nine candidates for each new detector versus three in existing IF/LOF/kNN grids; no equal search-budget or optimality claim.",
+      "Five methods are retained; this one-fold pilot is not the completed five-method CV study."
+    ],
+    "sources": [
+      "https://scikit-learn.org/1.6/modules/generated/sklearn.cluster.DBSCAN.html",
+      "https://scikit-learn.org/1.6/modules/generated/sklearn.svm.OneClassSVM.html"
+    ]
+  },
+  "addendum_sha256": "0c0a2f4fe81329664ce03fb9e4b689309f63420f5f7937076b6271ab51a2ab28",
+  "jobs": [
+    {
+      "seed": 42,
+      "fold": 1,
+      "representation": "AE_deep_d4",
+      "latent_dim": 4,
+      "ae_config": {
+        "name": "AE_deep_d4",
+        "architecture": "deep",
+        "latent_dim": 4
+      },
+      "source_plan_sha256": "b715e6b40a023d45fc80beb2dab06bd8d2809722594c691febe661fc662e2486",
+      "fold_relative_directory": "06_FD001_AE_ablation/b715e6b40a023d45fc80/AE_deep_d4/seed_42/fold_01",
+      "known_hashes": {
+        "06_FD001_AE_ablation/b715e6b40a023d45fc80/AE_deep_d4/seed_42/fold_01/selection_trials.json": "eb30f8df76665a056bdcbbfe1e3a3f995074f61dba839d3a7bf2681a6fccf653",
+        "06_FD001_AE_ablation/b715e6b40a023d45fc80/AE_deep_d4/seed_42/fold_01/encoder.keras": "a12c232697e322eec8356a4c8c66c35eaf252926c34b75f73328ceb79758d365",
+        "06_FD001_AE_ablation/b715e6b40a023d45fc80/AE_deep_d4/seed_42/fold_01/autoencoder.keras": "48f54def21ca5f718b7469c6263ea735ff98226ab9f5ea4a9aedda8823516fe2",
+        "06_FD001_AE_ablation/b715e6b40a023d45fc80/AE_deep_d4/seed_42/fold_01/scaler_parameters.json": "5adff2c79ccd56c0be32840da8b2ab657393cba5289b513f41160f0f004efc65",
+        "06_FD001_AE_ablation/b715e6b40a023d45fc80/AE_deep_d4/seed_42/fold_01/metrics.csv": "2ca4af81235dd9cf5e4f7df51d008d142b42ddb943108156c5d9453b44dc7fbd",
+        "02_FD001_protocol/experiment_protocol.json": "0bd6c241f0e50cdd3c00888d62840649a06f21ca7583fb59ecffedc01979d056",
+        "02_FD001_protocol/engine_splits.csv": "53c2ed564fcded8e502f307c0011aa1cd12ebd03b4429882e1fdf142466f7c45",
+        "02_FD001_protocol/train_evaluation_reference.csv": "c6b5e08384280fb687b188723fa7ecf7e76254a9ec20fc606be206f8de7a27e8",
+        "02_FD001_protocol/role_summary.csv": "a31fb6ead724b9190cb2a3de692c4f189f27d3cc589274c38fe65b2cffca82d7"
+      },
+      "train_sha256": "963b5e22825b34d8b21c69e1aeb4af3e647050eb672ee8834ba4b5d91d2de0f8",
+      "approved_primary_results": [
+        {
+          "representation": "AE_deep_d4",
+          "method": "IF",
+          "RUL_window": 30,
+          "selected_params": {
+            "n_estimators": 400
+          },
+          "selection_AP_primary": 0.5770079856915399,
+          "threshold": 0.4755028858446795,
+          "AP": 0.5839743634994774,
+          "ROC_AUC": 0.928982874477504,
+          "precision": 0.5986238532110092,
+          "recall": 0.8419354838709677,
+          "F1": 0.6997319034852547,
+          "Macro_F1": 0.8181558724674292,
+          "TP": 261,
+          "FP": 175,
+          "TN": 1654,
+          "FN": 49,
+          "fold": 1,
+          "seed": 42,
+          "architecture": "deep",
+          "latent_dim": 4.0
+        },
+        {
+          "representation": "AE_deep_d4",
+          "method": "LOF",
+          "RUL_window": 30,
+          "selected_params": {
+            "n_neighbors": 100
+          },
+          "selection_AP_primary": 0.18993323514359434,
+          "threshold": 1.0279607772827148,
+          "AP": 0.17893504909396524,
+          "ROC_AUC": 0.5372422794052805,
+          "precision": 0.1524163568773234,
+          "recall": 0.5290322580645161,
+          "F1": 0.23665223665223664,
+          "Macro_F1": 0.4354077227521211,
+          "TP": 164,
+          "FP": 912,
+          "TN": 917,
+          "FN": 146,
+          "fold": 1,
+          "seed": 42,
+          "architecture": "deep",
+          "latent_dim": 4.0
+        },
+        {
+          "representation": "AE_deep_d4",
+          "method": "kNN",
+          "RUL_window": 30,
+          "selected_params": {
+            "n_neighbors": 100
+          },
+          "selection_AP_primary": 0.61689702331084,
+          "threshold": 0.5700721781759032,
+          "AP": 0.6774280336668302,
+          "ROC_AUC": 0.9396550203707297,
+          "precision": 0.5128205128205128,
+          "recall": 0.9032258064516129,
+          "F1": 0.6542056074766355,
+          "Macro_F1": 0.7838532420784696,
+          "TP": 280,
+          "FP": 266,
+          "TN": 1563,
+          "FN": 30,
+          "fold": 1,
+          "seed": 42,
+          "architecture": "deep",
+          "latent_dim": 4.0
+        },
+        {
+          "representation": "AE_deep_d4",
+          "method": "MSE",
+          "RUL_window": 30,
+          "selected_params": {},
+          "selection_AP_primary": 0.15696545747400698,
+          "threshold": 0.037939682602882385,
+          "AP": 0.18173971118209586,
+          "ROC_AUC": 0.5618476516340676,
+          "precision": 0.14713216957605985,
+          "recall": 0.9516129032258065,
+          "F1": 0.2548596112311015,
+          "Macro_F1": 0.18805130332314118,
+          "TP": 295,
+          "FP": 1710,
+          "TN": 119,
+          "FN": 15,
+          "fold": 1,
+          "seed": 42,
+          "architecture": "deep",
+          "latent_dim": 4.0
+        }
+      ]
+    },
+    {
+      "seed": 42,
+      "fold": 1,
+      "representation": "AE_deep_d8",
+      "latent_dim": 8,
+      "ae_config": {
+        "name": "AE_deep_d8",
+        "architecture": "deep",
+        "latent_dim": 8
+      },
+      "source_plan_sha256": "b715e6b40a023d45fc80beb2dab06bd8d2809722594c691febe661fc662e2486",
+      "fold_relative_directory": "06_FD001_AE_ablation/b715e6b40a023d45fc80/AE_deep_d8/seed_42/fold_01",
+      "known_hashes": {
+        "06_FD001_AE_ablation/b715e6b40a023d45fc80/AE_deep_d8/seed_42/fold_01/selection_trials.json": "044d695d72afaa4a313e12c39107a7d976ae81588c9a4f09f583e4d71e7bd0b4",
+        "06_FD001_AE_ablation/b715e6b40a023d45fc80/AE_deep_d8/seed_42/fold_01/encoder.keras": "2f1446eff74db6f29513210a027b4b5272896a81083f7b1f350649577dfa72a0",
+        "06_FD001_AE_ablation/b715e6b40a023d45fc80/AE_deep_d8/seed_42/fold_01/autoencoder.keras": "1d36fa3eb63304d95e9b7213dec96c410a5af3e86dfbc76cedbde1357ba9459d",
+        "06_FD001_AE_ablation/b715e6b40a023d45fc80/AE_deep_d8/seed_42/fold_01/scaler_parameters.json": "f01323b0e2357d0ad4c6bc55f40e4ab24c307035951d98c1efa0b06bb6d5412e",
+        "06_FD001_AE_ablation/b715e6b40a023d45fc80/AE_deep_d8/seed_42/fold_01/metrics.csv": "31945e7cb95abdd1cd6674a78c4c4ba68b1fa6336cb4bd9fd7b6f184263a57ac",
+        "02_FD001_protocol/experiment_protocol.json": "0bd6c241f0e50cdd3c00888d62840649a06f21ca7583fb59ecffedc01979d056",
+        "02_FD001_protocol/engine_splits.csv": "53c2ed564fcded8e502f307c0011aa1cd12ebd03b4429882e1fdf142466f7c45",
+        "02_FD001_protocol/train_evaluation_reference.csv": "c6b5e08384280fb687b188723fa7ecf7e76254a9ec20fc606be206f8de7a27e8",
+        "02_FD001_protocol/role_summary.csv": "a31fb6ead724b9190cb2a3de692c4f189f27d3cc589274c38fe65b2cffca82d7"
+      },
+      "train_sha256": "963b5e22825b34d8b21c69e1aeb4af3e647050eb672ee8834ba4b5d91d2de0f8",
+      "approved_primary_results": [
+        {
+          "representation": "AE_deep_d8",
+          "method": "IF",
+          "RUL_window": 30,
+          "selected_params": {
+            "n_estimators": 100
+          },
+          "selection_AP_primary": 0.6979968987569469,
+          "threshold": 0.475804391409146,
+          "AP": 0.6705482408205756,
+          "ROC_AUC": 0.9421030353269016,
+          "precision": 0.6761658031088082,
+          "recall": 0.8419354838709677,
+          "F1": 0.75,
+          "Macro_F1": 0.85071189279732,
+          "TP": 261,
+          "FP": 125,
+          "TN": 1704,
+          "FN": 49,
+          "fold": 1,
+          "seed": 42,
+          "architecture": "deep",
+          "latent_dim": 8.0
+        },
+        {
+          "representation": "AE_deep_d8",
+          "method": "LOF",
+          "RUL_window": 30,
+          "selected_params": {
+            "n_neighbors": 100
+          },
+          "selection_AP_primary": 0.1667843916669896,
+          "threshold": 0.9743395447731018,
+          "AP": 0.15761541013928604,
+          "ROC_AUC": 0.47168733134623186,
+          "precision": 0.14755684567005323,
+          "recall": 0.9838709677419355,
+          "F1": 0.2566259991586033,
+          "Macro_F1": 0.16355760768030111,
+          "TP": 305,
+          "FP": 1762,
+          "TN": 67,
+          "FN": 5,
+          "fold": 1,
+          "seed": 42,
+          "architecture": "deep",
+          "latent_dim": 8.0
+        },
+        {
+          "representation": "AE_deep_d8",
+          "method": "kNN",
+          "RUL_window": 30,
+          "selected_params": {
+            "n_neighbors": 100
+          },
+          "selection_AP_primary": 0.598246765288534,
+          "threshold": 1.1229298092525632,
+          "AP": 0.6893877538031602,
+          "ROC_AUC": 0.9289176175946665,
+          "precision": 0.492619926199262,
+          "recall": 0.8612903225806452,
+          "F1": 0.6267605633802817,
+          "Macro_F1": 0.7669704743346242,
+          "TP": 267,
+          "FP": 275,
+          "TN": 1554,
+          "FN": 43,
+          "fold": 1,
+          "seed": 42,
+          "architecture": "deep",
+          "latent_dim": 8.0
+        },
+        {
+          "representation": "AE_deep_d8",
+          "method": "MSE",
+          "RUL_window": 30,
+          "selected_params": {},
+          "selection_AP_primary": 0.15210608870635572,
+          "threshold": 0.010801037773489952,
+          "AP": 0.17237193533634412,
+          "ROC_AUC": 0.5257852872184695,
+          "precision": 0.14306857424765665,
+          "recall": 0.9354838709677419,
+          "F1": 0.24818142918271288,
+          "Macro_F1": 0.1714889629169618,
+          "TP": 290,
+          "FP": 1737,
+          "TN": 92,
+          "FN": 20,
+          "fold": 1,
+          "seed": 42,
+          "architecture": "deep",
+          "latent_dim": 8.0
+        }
+      ]
+    },
+    {
+      "seed": 42,
+      "fold": 1,
+      "representation": "AE_shallow_d4",
+      "latent_dim": 4,
+      "ae_config": {
+        "name": "AE_shallow_d4",
+        "architecture": "shallow",
+        "latent_dim": 4
+      },
+      "source_plan_sha256": "b715e6b40a023d45fc80beb2dab06bd8d2809722594c691febe661fc662e2486",
+      "fold_relative_directory": "06_FD001_AE_ablation/b715e6b40a023d45fc80/AE_shallow_d4/seed_42/fold_01",
+      "known_hashes": {
+        "06_FD001_AE_ablation/b715e6b40a023d45fc80/AE_shallow_d4/seed_42/fold_01/selection_trials.json": "0606a40910f5f2369e6569f17a80187ec466d77faed84b6b978802a7d0d7e87a",
+        "06_FD001_AE_ablation/b715e6b40a023d45fc80/AE_shallow_d4/seed_42/fold_01/encoder.keras": "9cc26d9fc6f7c85cb191a1522544570cb1443d305a7708e099665f7d225779e5",
+        "06_FD001_AE_ablation/b715e6b40a023d45fc80/AE_shallow_d4/seed_42/fold_01/autoencoder.keras": "4977caf3beb1de3e674dc2b4c51e61254641ea287cac6d91a39fe706fa9e5ac5",
+        "06_FD001_AE_ablation/b715e6b40a023d45fc80/AE_shallow_d4/seed_42/fold_01/scaler_parameters.json": "7f9c1d001ff81588b22cc5602c4883149a1bbeb42ed6026ff9fb5c93372defae",
+        "06_FD001_AE_ablation/b715e6b40a023d45fc80/AE_shallow_d4/seed_42/fold_01/metrics.csv": "f822697218d74b4d5044cb093debd5440dbf9ada36736821e955517b3ae320fb",
+        "02_FD001_protocol/experiment_protocol.json": "0bd6c241f0e50cdd3c00888d62840649a06f21ca7583fb59ecffedc01979d056",
+        "02_FD001_protocol/engine_splits.csv": "53c2ed564fcded8e502f307c0011aa1cd12ebd03b4429882e1fdf142466f7c45",
+        "02_FD001_protocol/train_evaluation_reference.csv": "c6b5e08384280fb687b188723fa7ecf7e76254a9ec20fc606be206f8de7a27e8",
+        "02_FD001_protocol/role_summary.csv": "a31fb6ead724b9190cb2a3de692c4f189f27d3cc589274c38fe65b2cffca82d7"
+      },
+      "train_sha256": "963b5e22825b34d8b21c69e1aeb4af3e647050eb672ee8834ba4b5d91d2de0f8",
+      "approved_primary_results": [
+        {
+          "representation": "AE_shallow_d4",
+          "method": "IF",
+          "RUL_window": 30,
+          "selected_params": {
+            "n_estimators": 200
+          },
+          "selection_AP_primary": 0.5454195566648737,
+          "threshold": 0.4844536754458828,
+          "AP": 0.5473503382313593,
+          "ROC_AUC": 0.9097250392423147,
+          "precision": 0.5857142857142857,
+          "recall": 0.7935483870967742,
+          "F1": 0.673972602739726,
+          "Macro_F1": 0.8034462788219487,
+          "TP": 246,
+          "FP": 174,
+          "TN": 1655,
+          "FN": 64,
+          "fold": 1,
+          "seed": 42,
+          "architecture": "shallow",
+          "latent_dim": 4.0
+        },
+        {
+          "representation": "AE_shallow_d4",
+          "method": "LOF",
+          "RUL_window": 30,
+          "selected_params": {
+            "n_neighbors": 100
+          },
+          "selection_AP_primary": 0.1822258828765701,
+          "threshold": 1.006811261177063,
+          "AP": 0.1652277725173285,
+          "ROC_AUC": 0.5087691140937229,
+          "precision": 0.14817190506735087,
+          "recall": 0.7451612903225806,
+          "F1": 0.24719101123595505,
+          "Macro_F1": 0.33156561769767867,
+          "TP": 231,
+          "FP": 1328,
+          "TN": 501,
+          "FN": 79,
+          "fold": 1,
+          "seed": 42,
+          "architecture": "shallow",
+          "latent_dim": 4.0
+        },
+        {
+          "representation": "AE_shallow_d4",
+          "method": "kNN",
+          "RUL_window": 30,
+          "selected_params": {
+            "n_neighbors": 100
+          },
+          "selection_AP_primary": 0.5052051337886014,
+          "threshold": 0.5008335573443216,
+          "AP": 0.557022487662788,
+          "ROC_AUC": 0.8879415862713629,
+          "precision": 0.40472673559822747,
+          "recall": 0.8838709677419355,
+          "F1": 0.5552178318135765,
+          "Macro_F1": 0.7109118633391797,
+          "TP": 274,
+          "FP": 403,
+          "TN": 1426,
+          "FN": 36,
+          "fold": 1,
+          "seed": 42,
+          "architecture": "shallow",
+          "latent_dim": 4.0
+        },
+        {
+          "representation": "AE_shallow_d4",
+          "method": "MSE",
+          "RUL_window": 30,
+          "selected_params": {},
+          "selection_AP_primary": 0.1492195181860248,
+          "threshold": 0.03779149428009987,
+          "AP": 0.17345633741094027,
+          "ROC_AUC": 0.5571897211591034,
+          "precision": 0.147073290703394,
+          "recall": 0.964516129032258,
+          "F1": 0.255228339735382,
+          "Macro_F1": 0.17670977710283312,
+          "TP": 299,
+          "FP": 1734,
+          "TN": 95,
+          "FN": 11,
+          "fold": 1,
+          "seed": 42,
+          "architecture": "shallow",
+          "latent_dim": 4.0
+        }
+      ]
+    },
+    {
+      "seed": 42,
+      "fold": 1,
+      "representation": "AE_shallow_d8",
+      "latent_dim": 8,
+      "ae_config": {
+        "name": "AE_shallow_d8",
+        "architecture": "shallow",
+        "latent_dim": 8
+      },
+      "source_plan_sha256": "b715e6b40a023d45fc80beb2dab06bd8d2809722594c691febe661fc662e2486",
+      "fold_relative_directory": "06_FD001_AE_ablation/b715e6b40a023d45fc80/AE_shallow_d8/seed_42/fold_01",
+      "known_hashes": {
+        "06_FD001_AE_ablation/b715e6b40a023d45fc80/AE_shallow_d8/seed_42/fold_01/selection_trials.json": "2718a6f715802f211cf57d14d2c8b474b4a69fd2d4fe8ea1cff6c6c2c0bcd3f3",
+        "06_FD001_AE_ablation/b715e6b40a023d45fc80/AE_shallow_d8/seed_42/fold_01/encoder.keras": "3d4dc3d203a7ad985e6f372ecf5b3911e32208c632e45d7245ac97e256062528",
+        "06_FD001_AE_ablation/b715e6b40a023d45fc80/AE_shallow_d8/seed_42/fold_01/autoencoder.keras": "60b9cf5687c4703b3f886086b210f50c4914708e5f2533e71afca527f3fe12ca",
+        "06_FD001_AE_ablation/b715e6b40a023d45fc80/AE_shallow_d8/seed_42/fold_01/scaler_parameters.json": "8645efab5d4bb966ce5add1df23eb781bbdbb86b283a5499b87f49b2f79b2f45",
+        "06_FD001_AE_ablation/b715e6b40a023d45fc80/AE_shallow_d8/seed_42/fold_01/metrics.csv": "191cacb2d0415c3935efc83816ad42176af7ab5129f9827635d9508fb1c87966",
+        "02_FD001_protocol/experiment_protocol.json": "0bd6c241f0e50cdd3c00888d62840649a06f21ca7583fb59ecffedc01979d056",
+        "02_FD001_protocol/engine_splits.csv": "53c2ed564fcded8e502f307c0011aa1cd12ebd03b4429882e1fdf142466f7c45",
+        "02_FD001_protocol/train_evaluation_reference.csv": "c6b5e08384280fb687b188723fa7ecf7e76254a9ec20fc606be206f8de7a27e8",
+        "02_FD001_protocol/role_summary.csv": "a31fb6ead724b9190cb2a3de692c4f189f27d3cc589274c38fe65b2cffca82d7"
+      },
+      "train_sha256": "963b5e22825b34d8b21c69e1aeb4af3e647050eb672ee8834ba4b5d91d2de0f8",
+      "approved_primary_results": [
+        {
+          "representation": "AE_shallow_d8",
+          "method": "IF",
+          "RUL_window": 30,
+          "selected_params": {
+            "n_estimators": 400
+          },
+          "selection_AP_primary": 0.5952821980066898,
+          "threshold": 0.467616817254932,
+          "AP": 0.6014020461485969,
+          "ROC_AUC": 0.9268752535318082,
+          "precision": 0.5748373101952278,
+          "recall": 0.8548387096774194,
+          "F1": 0.6874189364461738,
+          "Macro_F1": 0.8093496164979657,
+          "TP": 265,
+          "FP": 196,
+          "TN": 1633,
+          "FN": 45,
+          "fold": 1,
+          "seed": 42,
+          "architecture": "shallow",
+          "latent_dim": 8.0
+        },
+        {
+          "representation": "AE_shallow_d8",
+          "method": "LOF",
+          "RUL_window": 30,
+          "selected_params": {
+            "n_neighbors": 100
+          },
+          "selection_AP_primary": 0.16331976174732404,
+          "threshold": 0.969768762588501,
+          "AP": 0.17016360382046505,
+          "ROC_AUC": 0.5039841972521562,
+          "precision": 0.14666666666666667,
+          "recall": 0.9935483870967742,
+          "F1": 0.2556016597510373,
+          "Macro_F1": 0.1476081103894373,
+          "TP": 308,
+          "FP": 1792,
+          "TN": 37,
+          "FN": 2,
+          "fold": 1,
+          "seed": 42,
+          "architecture": "shallow",
+          "latent_dim": 8.0
+        },
+        {
+          "representation": "AE_shallow_d8",
+          "method": "kNN",
+          "RUL_window": 30,
+          "selected_params": {
+            "n_neighbors": 100
+          },
+          "selection_AP_primary": 0.4888940668088082,
+          "threshold": 1.0849777122389412,
+          "AP": 0.5827947126391235,
+          "ROC_AUC": 0.8922661775339954,
+          "precision": 0.41333333333333333,
+          "recall": 0.8,
+          "F1": 0.545054945054945,
+          "Macro_F1": 0.7110666649265224,
+          "TP": 248,
+          "FP": 352,
+          "TN": 1477,
+          "FN": 62,
+          "fold": 1,
+          "seed": 42,
+          "architecture": "shallow",
+          "latent_dim": 8.0
+        },
+        {
+          "representation": "AE_shallow_d8",
+          "method": "MSE",
+          "RUL_window": 30,
+          "selected_params": {},
+          "selection_AP_primary": 0.15226858719395586,
+          "threshold": 0.009314563125371933,
+          "AP": 0.17034562581958862,
+          "ROC_AUC": 0.5244995502566183,
+          "precision": 0.14167879670063077,
+          "recall": 0.9419354838709677,
+          "F1": 0.2463095740194011,
+          "Macro_F1": 0.15461781794834764,
+          "TP": 292,
+          "FP": 1769,
+          "TN": 60,
+          "FN": 18,
+          "fold": 1,
+          "seed": 42,
+          "architecture": "shallow",
+          "latent_dim": 8.0
+        }
+      ]
+    },
+    {
+      "seed": 42,
+      "fold": 1,
+      "representation": "AE_shallow_d21",
+      "latent_dim": 21,
+      "ae_config": {
+        "name": "AE_shallow_d21",
+        "architecture": "shallow",
+        "latent_dim": 21
+      },
+      "source_plan_sha256": "b715e6b40a023d45fc80beb2dab06bd8d2809722594c691febe661fc662e2486",
+      "fold_relative_directory": "06_FD001_AE_ablation/b715e6b40a023d45fc80/AE_shallow_d21/seed_42/fold_01",
+      "known_hashes": {
+        "06_FD001_AE_ablation/b715e6b40a023d45fc80/AE_shallow_d21/seed_42/fold_01/selection_trials.json": "211001badf80c7e41e0b46dee4dc4ac23ce12e9b1a66047320a59342a8ffc49d",
+        "06_FD001_AE_ablation/b715e6b40a023d45fc80/AE_shallow_d21/seed_42/fold_01/encoder.keras": "e7636c4e3237713fb9b8159b5d53fb77a4213d3a70341332cd0b437ab4829b6e",
+        "06_FD001_AE_ablation/b715e6b40a023d45fc80/AE_shallow_d21/seed_42/fold_01/autoencoder.keras": "101f5de2a0ca300a951e6754cd1c03769c714dc73bd4a3aaada7e18728b83cbd",
+        "06_FD001_AE_ablation/b715e6b40a023d45fc80/AE_shallow_d21/seed_42/fold_01/scaler_parameters.json": "8198899a9ff216f343a48cac55860495f748876aaf040ee93c72ca41ed80a4ae",
+        "06_FD001_AE_ablation/b715e6b40a023d45fc80/AE_shallow_d21/seed_42/fold_01/metrics.csv": "7298df3f78c7e0e782353779d30e846825cb7be55e5b8d9735c290ca801968d5",
+        "02_FD001_protocol/experiment_protocol.json": "0bd6c241f0e50cdd3c00888d62840649a06f21ca7583fb59ecffedc01979d056",
+        "02_FD001_protocol/engine_splits.csv": "53c2ed564fcded8e502f307c0011aa1cd12ebd03b4429882e1fdf142466f7c45",
+        "02_FD001_protocol/train_evaluation_reference.csv": "c6b5e08384280fb687b188723fa7ecf7e76254a9ec20fc606be206f8de7a27e8",
+        "02_FD001_protocol/role_summary.csv": "a31fb6ead724b9190cb2a3de692c4f189f27d3cc589274c38fe65b2cffca82d7"
+      },
+      "train_sha256": "963b5e22825b34d8b21c69e1aeb4af3e647050eb672ee8834ba4b5d91d2de0f8",
+      "approved_primary_results": [
+        {
+          "representation": "AE_shallow_d21",
+          "method": "IF",
+          "RUL_window": 30,
+          "selected_params": {
+            "n_estimators": 100
+          },
+          "selection_AP_primary": 0.6009943640574718,
+          "threshold": 0.4781028174160137,
+          "AP": 0.5411724808116317,
+          "ROC_AUC": 0.9032346249492937,
+          "precision": 0.6111111111111112,
+          "recall": 0.7096774193548387,
+          "F1": 0.6567164179104478,
+          "Macro_F1": 0.7964845947645365,
+          "TP": 220,
+          "FP": 140,
+          "TN": 1689,
+          "FN": 90,
+          "fold": 1,
+          "seed": 42,
+          "architecture": "shallow",
+          "latent_dim": 21.0
+        },
+        {
+          "representation": "AE_shallow_d21",
+          "method": "LOF",
+          "RUL_window": 30,
+          "selected_params": {
+            "n_neighbors": 100
+          },
+          "selection_AP_primary": 0.1644012270915275,
+          "threshold": 0.9759478569030762,
+          "AP": 0.17206341915970344,
+          "ROC_AUC": 0.506489532443253,
+          "precision": 0.147917663954045,
+          "recall": 0.9967741935483871,
+          "F1": 0.2576073363901626,
+          "Macro_F1": 0.15488136909981787,
+          "TP": 309,
+          "FP": 1780,
+          "TN": 49,
+          "FN": 1,
+          "fold": 1,
+          "seed": 42,
+          "architecture": "shallow",
+          "latent_dim": 21.0
+        },
+        {
+          "representation": "AE_shallow_d21",
+          "method": "kNN",
+          "RUL_window": 30,
+          "selected_params": {
+            "n_neighbors": 100
+          },
+          "selection_AP_primary": 0.4533271208193783,
+          "threshold": 2.024214267730713,
+          "AP": 0.55447119625087,
+          "ROC_AUC": 0.879449373004815,
+          "precision": 0.41986062717770034,
+          "recall": 0.7774193548387097,
+          "F1": 0.5452488687782805,
+          "Macro_F1": 0.7134022776419393,
+          "TP": 241,
+          "FP": 333,
+          "TN": 1496,
+          "FN": 69,
+          "fold": 1,
+          "seed": 42,
+          "architecture": "shallow",
+          "latent_dim": 21.0
+        },
+        {
+          "representation": "AE_shallow_d21",
+          "method": "MSE",
+          "RUL_window": 30,
+          "selected_params": {},
+          "selection_AP_primary": 0.13242902951192675,
+          "threshold": 3.2996867957990617e-05,
+          "AP": 0.11942532149713027,
+          "ROC_AUC": 0.44559692410800894,
+          "precision": 0.1616800920598389,
+          "recall": 0.9064516129032258,
+          "F1": 0.2744140625,
+          "Macro_F1": 0.30402317474775786,
+          "TP": 281,
+          "FP": 1457,
+          "TN": 372,
+          "FN": 29,
+          "fold": 1,
+          "seed": 42,
+          "architecture": "shallow",
+          "latent_dim": 21.0
+        }
+      ]
+    }
+  ],
+  "scope": "Five existing AE configurations, seed42 fold1; no AE retraining; unchanged missing-method grid",
+  "worker_sha256": "0646c2637c622ecff4fc69d8e982ab6a3faae776157b61adecc1292c94d7a735"
+}

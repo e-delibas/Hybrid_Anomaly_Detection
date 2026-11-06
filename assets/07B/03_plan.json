@@ -1,0 +1,570 @@
+{
+  "stage": "07B_PCA_five_method_pilot",
+  "scope": "Five original PCA representations seed42 fold1; reload stored PCA, no PCA fit or AE training; unchanged missing-method grid",
+  "expected_versions": {
+    "python": "3.12.16",
+    "numpy": "2.1.3",
+    "pandas": "2.2.3",
+    "sklearn": "1.6.1"
+  },
+  "five_method_addendum": {
+    "id": "five_detector_completion_v1_pilot",
+    "scope": "FD001 outer fold1 seed42; Raw and saved AE_latent21; MSE additional control",
+    "original_detectors": [
+      "DBSCAN",
+      "IF",
+      "LOF",
+      "OC-SVM",
+      "kNN"
+    ],
+    "new_methods": [
+      "DBSCAN",
+      "OC-SVM"
+    ],
+    "representations": [
+      "Raw",
+      "AE_latent21"
+    ],
+    "reuse": "Stage05 selected IF/LOF/kNN results and MSE only after in-run baseline score reproduction; saved AE is not re-trained",
+    "roles": "Same 70 fit / 10 early_stop / 10 selection / 10 outer engines from immutable stage02; model/scaler fits use fitting engines only",
+    "primary_reference": "RUL<=30 late-life proxy, not independent annotated fault onset",
+    "sensitivity_windows": [
+      20,
+      40
+    ],
+    "selection": "max selection AP; exact ties keep first candidate; threshold=max positive-class selection F1 with 1e-12 tie tolerance choosing highest threshold",
+    "prediction": "score >= selection threshold",
+    "new_detector_numeric_dtype": "float64; reused Raw/AE representation generation unchanged",
+    "DBSCAN": {
+      "min_samples": [
+        20,
+        50,
+        100
+      ],
+      "eps_quantiles": [
+        0.5,
+        0.75,
+        0.9
+      ],
+      "eps_rule": "fit-only q quantile (linear interpolation) of Euclidean mth-neighbor distance, explicitly including self in count",
+      "fixed": {
+        "metric": "euclidean",
+        "algorithm": "ball_tree",
+        "n_jobs": -1
+      },
+      "score": "minimum Euclidean distance from query to frozen fit-set DBSCAN core samples divided by eps",
+      "variant": "DBSCAN_core_distance_v1",
+      "no_query_refit": true,
+      "diagnostic_rule": "score > 1 (outside all fixed core epsilon balls); not native DBSCAN predict; reported separately from selection-F1 threshold"
+    },
+    "OC-SVM": {
+      "nu": [
+        0.01,
+        0.05,
+        0.1
+      ],
+      "gamma": [
+        0.0001,
+        0.01,
+        "scale"
+      ],
+      "fixed": {
+        "kernel": "rbf",
+        "tol": 0.001,
+        "cache_size": 512,
+        "shrinking": true,
+        "max_iter": 100000
+      },
+      "score": "negative score_samples"
+    },
+    "resources": {
+      "max_dbscan_neighbor_entries": 20000000,
+      "worker_timeout_seconds": 3600,
+      "policy": "resource limit aborts entire pilot; candidates are not silently dropped for memory; undefined/no-convergence candidates are logged and cause REVIEW_REQUIRED_CANDIDATES"
+    },
+    "candidate_count": {
+      "DBSCAN_per_representation": 9,
+      "OC-SVM_per_representation": 9,
+      "new_total": 36
+    },
+    "scope_counts": {
+      "primary_groups": 11,
+      "metrics_all_three_windows": 33
+    },
+    "transparency": [
+      "DBSCAN out-of-sample scoring is an explicit core-distance extension, not a native predict API.",
+      "Original notebook fit DBSCAN on the test batch; this pilot does not preserve that transductive behavior.",
+      "Limited follow-up grids are frozen before this pilot, after prior outer results were already observed; not original preregistration.",
+      "Nine candidates for each new detector versus three in existing IF/LOF/kNN grids; no equal search-budget or optimality claim.",
+      "Five methods are retained; this one-fold pilot is not the completed five-method CV study."
+    ],
+    "sources": [
+      "https://scikit-learn.org/1.6/modules/generated/sklearn.cluster.DBSCAN.html",
+      "https://scikit-learn.org/1.6/modules/generated/sklearn.svm.OneClassSVM.html"
+    ]
+  },
+  "addendum_sha256": "0c0a2f4fe81329664ce03fb9e4b689309f63420f5f7937076b6271ab51a2ab28",
+  "worker_sha256": "9ec9a51c7c32b679a31d92dc539e7811ae379b16eba6b8dd607271d8563477ee",
+  "jobs": [
+    {
+      "seed": 42,
+      "fold": 1,
+      "representation": "PCA_d4",
+      "n_components": 4,
+      "pca_config": {
+        "name": "PCA_d4",
+        "n_components": 4,
+        "post_standardize": false
+      },
+      "source_plan_sha256": "8bf13d7760cd6731f1ff45e1647489f7b87d51e90cfee26ff1b1aae1711cad75",
+      "fold_relative_directory": "07_FD001_PCA_comparison/8bf13d7760cd6731f1ff/PCA_d4/seed_42/fold_01",
+      "known_hashes": {
+        "07_FD001_PCA_comparison/8bf13d7760cd6731f1ff/PCA_d4/seed_42/fold_01/selection_trials.json": "6eca247e8a08a9d09e5e36e308d308a90be3e3e9e2f07b24999ac422e5dd9a24",
+        "07_FD001_PCA_comparison/8bf13d7760cd6731f1ff/PCA_d4/seed_42/fold_01/pca_parameters.npz": "aa2cc28f483db3e0166f4c8c83f028186e10524c5cf0d0e21af964eabd9d1b8b",
+        "07_FD001_PCA_comparison/8bf13d7760cd6731f1ff/PCA_d4/seed_42/fold_01/scaler_parameters.json": "b7e07881f03f5b5189bb67151b1b62ad90dc1fc8335a1b9a9f6679deab709a18",
+        "07_FD001_PCA_comparison/8bf13d7760cd6731f1ff/PCA_d4/seed_42/fold_01/metrics.csv": "1674ea8a9db42c591e59989bdf30437ba4020b222f68e556c07c02bd65f8042d",
+        "02_FD001_protocol/experiment_protocol.json": "0bd6c241f0e50cdd3c00888d62840649a06f21ca7583fb59ecffedc01979d056",
+        "02_FD001_protocol/engine_splits.csv": "53c2ed564fcded8e502f307c0011aa1cd12ebd03b4429882e1fdf142466f7c45",
+        "02_FD001_protocol/train_evaluation_reference.csv": "c6b5e08384280fb687b188723fa7ecf7e76254a9ec20fc606be206f8de7a27e8",
+        "02_FD001_protocol/role_summary.csv": "a31fb6ead724b9190cb2a3de692c4f189f27d3cc589274c38fe65b2cffca82d7"
+      },
+      "train_sha256": "963b5e22825b34d8b21c69e1aeb4af3e647050eb672ee8834ba4b5d91d2de0f8",
+      "approved_primary_results": [
+        {
+          "representation": "PCA_d4",
+          "method": "IF",
+          "RUL_window": 30,
+          "selected_params": {
+            "n_estimators": 200
+          },
+          "selection_AP_primary": 0.5201750224217984,
+          "threshold": 0.4683229129861311,
+          "AP": 0.544247131630958,
+          "ROC_AUC": 0.9136563255083865,
+          "precision": 0.4908424908424908,
+          "recall": 0.864516129032258,
+          "F1": 0.6261682242990654,
+          "Macro_F1": 0.7663278292740212,
+          "TP": 268,
+          "FP": 278,
+          "TN": 1551,
+          "FN": 42,
+          "fold": 1,
+          "seed": 42
+        },
+        {
+          "representation": "PCA_d4",
+          "method": "LOF",
+          "RUL_window": 30,
+          "selected_params": {
+            "n_neighbors": 20
+          },
+          "selection_AP_primary": 0.19634533599992757,
+          "threshold": 1.0530102661868461,
+          "AP": 0.199349185899449,
+          "ROC_AUC": 0.5558016896241557,
+          "precision": 0.2218370883882149,
+          "recall": 0.4129032258064516,
+          "F1": 0.28861330326944756,
+          "Macro_F1": 0.5512662505730901,
+          "TP": 128,
+          "FP": 449,
+          "TN": 1380,
+          "FN": 182,
+          "fold": 1,
+          "seed": 42
+        },
+        {
+          "representation": "PCA_d4",
+          "method": "kNN",
+          "RUL_window": 30,
+          "selected_params": {
+            "n_neighbors": 100
+          },
+          "selection_AP_primary": 0.5737224398551425,
+          "threshold": 0.796759700098664,
+          "AP": 0.6469050667253646,
+          "ROC_AUC": 0.9283567611421719,
+          "precision": 0.48148148148148145,
+          "recall": 0.8806451612903226,
+          "F1": 0.6225769669327252,
+          "Macro_F1": 0.7626263252775947,
+          "TP": 273,
+          "FP": 294,
+          "TN": 1535,
+          "FN": 37,
+          "fold": 1,
+          "seed": 42
+        }
+      ]
+    },
+    {
+      "seed": 42,
+      "fold": 1,
+      "representation": "PCA_scaled_d4",
+      "n_components": 4,
+      "pca_config": {
+        "name": "PCA_scaled_d4",
+        "n_components": 4,
+        "post_standardize": true
+      },
+      "source_plan_sha256": "8bf13d7760cd6731f1ff45e1647489f7b87d51e90cfee26ff1b1aae1711cad75",
+      "fold_relative_directory": "07_FD001_PCA_comparison/8bf13d7760cd6731f1ff/PCA_scaled_d4/seed_42/fold_01",
+      "known_hashes": {
+        "07_FD001_PCA_comparison/8bf13d7760cd6731f1ff/PCA_scaled_d4/seed_42/fold_01/selection_trials.json": "1e93bcab17673c1b4c636044f0906df05165d474b2c3fb25122df92fe9b452e5",
+        "07_FD001_PCA_comparison/8bf13d7760cd6731f1ff/PCA_scaled_d4/seed_42/fold_01/pca_parameters.npz": "e6af41383f55c0636aaee1946c5481ab3c38844eecdc285a294d877ca9051be2",
+        "07_FD001_PCA_comparison/8bf13d7760cd6731f1ff/PCA_scaled_d4/seed_42/fold_01/scaler_parameters.json": "4aac28441e1ad56b3bf00e31ec34e3b65b1c4c8a5c04303980af9d62db1733e9",
+        "07_FD001_PCA_comparison/8bf13d7760cd6731f1ff/PCA_scaled_d4/seed_42/fold_01/metrics.csv": "9f09611c9750d48274dae6618e58e5f3ff3e255dfa05eeb5371ebf0c5b33b56c",
+        "02_FD001_protocol/experiment_protocol.json": "0bd6c241f0e50cdd3c00888d62840649a06f21ca7583fb59ecffedc01979d056",
+        "02_FD001_protocol/engine_splits.csv": "53c2ed564fcded8e502f307c0011aa1cd12ebd03b4429882e1fdf142466f7c45",
+        "02_FD001_protocol/train_evaluation_reference.csv": "c6b5e08384280fb687b188723fa7ecf7e76254a9ec20fc606be206f8de7a27e8",
+        "02_FD001_protocol/role_summary.csv": "a31fb6ead724b9190cb2a3de692c4f189f27d3cc589274c38fe65b2cffca82d7"
+      },
+      "train_sha256": "963b5e22825b34d8b21c69e1aeb4af3e647050eb672ee8834ba4b5d91d2de0f8",
+      "approved_primary_results": [
+        {
+          "representation": "PCA_scaled_d4",
+          "method": "IF",
+          "RUL_window": 30,
+          "selected_params": {
+            "n_estimators": 200
+          },
+          "selection_AP_primary": 0.5201750224217984,
+          "threshold": 0.4683229129861311,
+          "AP": 0.544247131630958,
+          "ROC_AUC": 0.9136563255083865,
+          "precision": 0.4908424908424908,
+          "recall": 0.864516129032258,
+          "F1": 0.6261682242990654,
+          "Macro_F1": 0.7663278292740212,
+          "TP": 268,
+          "FP": 278,
+          "TN": 1551,
+          "FN": 42,
+          "fold": 1,
+          "seed": 42
+        },
+        {
+          "representation": "PCA_scaled_d4",
+          "method": "LOF",
+          "RUL_window": 30,
+          "selected_params": {
+            "n_neighbors": 100
+          },
+          "selection_AP_primary": 0.25471157985834825,
+          "threshold": 1.0307038796445507,
+          "AP": 0.26169718196924574,
+          "ROC_AUC": 0.6610575142418738,
+          "precision": 0.20672097759674135,
+          "recall": 0.6548387096774193,
+          "F1": 0.3142414860681115,
+          "Macro_F1": 0.508761734326755,
+          "TP": 203,
+          "FP": 779,
+          "TN": 1050,
+          "FN": 107,
+          "fold": 1,
+          "seed": 42
+        },
+        {
+          "representation": "PCA_scaled_d4",
+          "method": "kNN",
+          "RUL_window": 30,
+          "selected_params": {
+            "n_neighbors": 100
+          },
+          "selection_AP_primary": 0.5347741227312971,
+          "threshold": 0.5431558813932235,
+          "AP": 0.5955669988877436,
+          "ROC_AUC": 0.9170126457256742,
+          "precision": 0.4542483660130719,
+          "recall": 0.896774193548387,
+          "F1": 0.6030368763557483,
+          "Macro_F1": 0.7469892367476001,
+          "TP": 278,
+          "FP": 334,
+          "TN": 1495,
+          "FN": 32,
+          "fold": 1,
+          "seed": 42
+        }
+      ]
+    },
+    {
+      "seed": 42,
+      "fold": 1,
+      "representation": "PCA_d8",
+      "n_components": 8,
+      "pca_config": {
+        "name": "PCA_d8",
+        "n_components": 8,
+        "post_standardize": false
+      },
+      "source_plan_sha256": "8bf13d7760cd6731f1ff45e1647489f7b87d51e90cfee26ff1b1aae1711cad75",
+      "fold_relative_directory": "07_FD001_PCA_comparison/8bf13d7760cd6731f1ff/PCA_d8/seed_42/fold_01",
+      "known_hashes": {
+        "07_FD001_PCA_comparison/8bf13d7760cd6731f1ff/PCA_d8/seed_42/fold_01/selection_trials.json": "d14224e76b2efaecdf9213c3a8f40ef320c5e0f2c1a381ef17ff01f5470e54d7",
+        "07_FD001_PCA_comparison/8bf13d7760cd6731f1ff/PCA_d8/seed_42/fold_01/pca_parameters.npz": "bb6f392b74bdbfb5d74c6d6e20e97a7b70405cfc9581af33931bf31d8ac16b8b",
+        "07_FD001_PCA_comparison/8bf13d7760cd6731f1ff/PCA_d8/seed_42/fold_01/scaler_parameters.json": "f94755ac0161cbdb9cd309d7a181aea269b8b05afce57360bc327f06629f3512",
+        "07_FD001_PCA_comparison/8bf13d7760cd6731f1ff/PCA_d8/seed_42/fold_01/metrics.csv": "9041f83237d3740e17a622263f24701399a772bb17682a9d288b3ce55555312b",
+        "02_FD001_protocol/experiment_protocol.json": "0bd6c241f0e50cdd3c00888d62840649a06f21ca7583fb59ecffedc01979d056",
+        "02_FD001_protocol/engine_splits.csv": "53c2ed564fcded8e502f307c0011aa1cd12ebd03b4429882e1fdf142466f7c45",
+        "02_FD001_protocol/train_evaluation_reference.csv": "c6b5e08384280fb687b188723fa7ecf7e76254a9ec20fc606be206f8de7a27e8",
+        "02_FD001_protocol/role_summary.csv": "a31fb6ead724b9190cb2a3de692c4f189f27d3cc589274c38fe65b2cffca82d7"
+      },
+      "train_sha256": "963b5e22825b34d8b21c69e1aeb4af3e647050eb672ee8834ba4b5d91d2de0f8",
+      "approved_primary_results": [
+        {
+          "representation": "PCA_d8",
+          "method": "IF",
+          "RUL_window": 30,
+          "selected_params": {
+            "n_estimators": 100
+          },
+          "selection_AP_primary": 0.41485541310131896,
+          "threshold": 0.45211570257413336,
+          "AP": 0.4600806815468209,
+          "ROC_AUC": 0.8605372228787104,
+          "precision": 0.41284403669724773,
+          "recall": 0.7258064516129032,
+          "F1": 0.5263157894736842,
+          "Macro_F1": 0.7039992619585774,
+          "TP": 225,
+          "FP": 320,
+          "TN": 1509,
+          "FN": 85,
+          "fold": 1,
+          "seed": 42
+        },
+        {
+          "representation": "PCA_d8",
+          "method": "LOF",
+          "RUL_window": 30,
+          "selected_params": {
+            "n_neighbors": 100
+          },
+          "selection_AP_primary": 0.15996611841444766,
+          "threshold": 0.9670680605941777,
+          "AP": 0.15400741488405878,
+          "ROC_AUC": 0.482149596994656,
+          "precision": 0.1468764902241297,
+          "recall": 0.9935483870967742,
+          "F1": 0.25592023265475694,
+          "Macro_F1": 0.14933905806976222,
+          "TP": 308,
+          "FP": 1789,
+          "TN": 40,
+          "FN": 2,
+          "fold": 1,
+          "seed": 42
+        },
+        {
+          "representation": "PCA_d8",
+          "method": "kNN",
+          "RUL_window": 30,
+          "selected_params": {
+            "n_neighbors": 100
+          },
+          "selection_AP_primary": 0.5369880825237975,
+          "threshold": 1.565110860825056,
+          "AP": 0.6127842543929505,
+          "ROC_AUC": 0.9051658759413747,
+          "precision": 0.4491682070240296,
+          "recall": 0.7838709677419354,
+          "F1": 0.5710928319623971,
+          "Macro_F1": 0.7322928414261942,
+          "TP": 243,
+          "FP": 298,
+          "TN": 1531,
+          "FN": 67,
+          "fold": 1,
+          "seed": 42
+        }
+      ]
+    },
+    {
+      "seed": 42,
+      "fold": 1,
+      "representation": "PCA_scaled_d8",
+      "n_components": 8,
+      "pca_config": {
+        "name": "PCA_scaled_d8",
+        "n_components": 8,
+        "post_standardize": true
+      },
+      "source_plan_sha256": "8bf13d7760cd6731f1ff45e1647489f7b87d51e90cfee26ff1b1aae1711cad75",
+      "fold_relative_directory": "07_FD001_PCA_comparison/8bf13d7760cd6731f1ff/PCA_scaled_d8/seed_42/fold_01",
+      "known_hashes": {
+        "07_FD001_PCA_comparison/8bf13d7760cd6731f1ff/PCA_scaled_d8/seed_42/fold_01/selection_trials.json": "a000a91a3b7f48a70d33b605f559c82ce2bca86f4dcfd3f1d46734c234c69eb9",
+        "07_FD001_PCA_comparison/8bf13d7760cd6731f1ff/PCA_scaled_d8/seed_42/fold_01/pca_parameters.npz": "2d429f58ec95d49797de76ca709835ca7bc5287151d843939d606c0f22ea892b",
+        "07_FD001_PCA_comparison/8bf13d7760cd6731f1ff/PCA_scaled_d8/seed_42/fold_01/scaler_parameters.json": "a5960e1c528d7159cae44d54fde51d418c0abff63c5f19d2dbcaf32afb366153",
+        "07_FD001_PCA_comparison/8bf13d7760cd6731f1ff/PCA_scaled_d8/seed_42/fold_01/metrics.csv": "fa1b93bd5362a0df76081403ff4f03c536c28461f0bd477270ab0bcb8c459081",
+        "02_FD001_protocol/experiment_protocol.json": "0bd6c241f0e50cdd3c00888d62840649a06f21ca7583fb59ecffedc01979d056",
+        "02_FD001_protocol/engine_splits.csv": "53c2ed564fcded8e502f307c0011aa1cd12ebd03b4429882e1fdf142466f7c45",
+        "02_FD001_protocol/train_evaluation_reference.csv": "c6b5e08384280fb687b188723fa7ecf7e76254a9ec20fc606be206f8de7a27e8",
+        "02_FD001_protocol/role_summary.csv": "a31fb6ead724b9190cb2a3de692c4f189f27d3cc589274c38fe65b2cffca82d7"
+      },
+      "train_sha256": "963b5e22825b34d8b21c69e1aeb4af3e647050eb672ee8834ba4b5d91d2de0f8",
+      "approved_primary_results": [
+        {
+          "representation": "PCA_scaled_d8",
+          "method": "IF",
+          "RUL_window": 30,
+          "selected_params": {
+            "n_estimators": 100
+          },
+          "selection_AP_primary": 0.41485541310131896,
+          "threshold": 0.45211570257413336,
+          "AP": 0.4600806815468209,
+          "ROC_AUC": 0.8605372228787104,
+          "precision": 0.41284403669724773,
+          "recall": 0.7258064516129032,
+          "F1": 0.5263157894736842,
+          "Macro_F1": 0.7039992619585774,
+          "TP": 225,
+          "FP": 320,
+          "TN": 1509,
+          "FN": 85,
+          "fold": 1,
+          "seed": 42
+        },
+        {
+          "representation": "PCA_scaled_d8",
+          "method": "LOF",
+          "RUL_window": 30,
+          "selected_params": {
+            "n_neighbors": 100
+          },
+          "selection_AP_primary": 0.2639972062104405,
+          "threshold": 1.045990270680298,
+          "AP": 0.2634195848532951,
+          "ROC_AUC": 0.6939222913984373,
+          "precision": 0.19968919968919968,
+          "recall": 0.8290322580645161,
+          "F1": 0.32185347526612396,
+          "Macro_F1": 0.4589498633324279,
+          "TP": 257,
+          "FP": 1030,
+          "TN": 799,
+          "FN": 53,
+          "fold": 1,
+          "seed": 42
+        },
+        {
+          "representation": "PCA_scaled_d8",
+          "method": "kNN",
+          "RUL_window": 30,
+          "selected_params": {
+            "n_neighbors": 100
+          },
+          "selection_AP_primary": 0.420445960429022,
+          "threshold": 1.793027091237225,
+          "AP": 0.466850763111609,
+          "ROC_AUC": 0.8552037954814018,
+          "precision": 0.37439222042139386,
+          "recall": 0.7451612903225806,
+          "F1": 0.49838187702265374,
+          "Macro_F1": 0.6798086645632516,
+          "TP": 231,
+          "FP": 386,
+          "TN": 1443,
+          "FN": 79,
+          "fold": 1,
+          "seed": 42
+        }
+      ]
+    },
+    {
+      "seed": 42,
+      "fold": 1,
+      "representation": "PCA_d21",
+      "n_components": 21,
+      "pca_config": {
+        "name": "PCA_d21",
+        "n_components": 21,
+        "post_standardize": false
+      },
+      "source_plan_sha256": "8bf13d7760cd6731f1ff45e1647489f7b87d51e90cfee26ff1b1aae1711cad75",
+      "fold_relative_directory": "07_FD001_PCA_comparison/8bf13d7760cd6731f1ff/PCA_d21/seed_42/fold_01",
+      "known_hashes": {
+        "07_FD001_PCA_comparison/8bf13d7760cd6731f1ff/PCA_d21/seed_42/fold_01/selection_trials.json": "b1c5a353d6a21a45b0dadd2933b85e44a512c79c171eabd1ffd82891428748d3",
+        "07_FD001_PCA_comparison/8bf13d7760cd6731f1ff/PCA_d21/seed_42/fold_01/pca_parameters.npz": "d7e56cd47c3c28ee61e9e8a2a5b804cc6933bc5a93f257e53031bb28a9b023ff",
+        "07_FD001_PCA_comparison/8bf13d7760cd6731f1ff/PCA_d21/seed_42/fold_01/scaler_parameters.json": "156ecf37d138d58d882e357d87c8160474a3bba124c3a87a6e1a1f2f350b1e90",
+        "07_FD001_PCA_comparison/8bf13d7760cd6731f1ff/PCA_d21/seed_42/fold_01/metrics.csv": "27d3a9862eb5ec8e89d5b81da00d4d63e0963f38c5e210daf02c2542a3b5174e",
+        "02_FD001_protocol/experiment_protocol.json": "0bd6c241f0e50cdd3c00888d62840649a06f21ca7583fb59ecffedc01979d056",
+        "02_FD001_protocol/engine_splits.csv": "53c2ed564fcded8e502f307c0011aa1cd12ebd03b4429882e1fdf142466f7c45",
+        "02_FD001_protocol/train_evaluation_reference.csv": "c6b5e08384280fb687b188723fa7ecf7e76254a9ec20fc606be206f8de7a27e8",
+        "02_FD001_protocol/role_summary.csv": "a31fb6ead724b9190cb2a3de692c4f189f27d3cc589274c38fe65b2cffca82d7"
+      },
+      "train_sha256": "963b5e22825b34d8b21c69e1aeb4af3e647050eb672ee8834ba4b5d91d2de0f8",
+      "approved_primary_results": [
+        {
+          "representation": "PCA_d21",
+          "method": "IF",
+          "RUL_window": 30,
+          "selected_params": {
+            "n_estimators": 400
+          },
+          "selection_AP_primary": 0.3278171120728407,
+          "threshold": 0.45049074497352215,
+          "AP": 0.38249982413761147,
+          "ROC_AUC": 0.7918270163494947,
+          "precision": 0.3579136690647482,
+          "recall": 0.6419354838709678,
+          "F1": 0.45958429561200925,
+          "Macro_F1": 0.661210670666497,
+          "TP": 199,
+          "FP": 357,
+          "TN": 1472,
+          "FN": 111,
+          "fold": 1,
+          "seed": 42
+        },
+        {
+          "representation": "PCA_d21",
+          "method": "LOF",
+          "RUL_window": 30,
+          "selected_params": {
+            "n_neighbors": 100
+          },
+          "selection_AP_primary": 0.1608048672224708,
+          "threshold": 0.9772202333520772,
+          "AP": 0.16222324302857766,
+          "ROC_AUC": 0.49262773593890546,
+          "precision": 0.1482194417709336,
+          "recall": 0.9935483870967742,
+          "F1": 0.25795644891122277,
+          "Macro_F1": 0.1601951556725426,
+          "TP": 308,
+          "FP": 1770,
+          "TN": 59,
+          "FN": 2,
+          "fold": 1,
+          "seed": 42
+        },
+        {
+          "representation": "PCA_d21",
+          "method": "kNN",
+          "RUL_window": 30,
+          "selected_params": {
+            "n_neighbors": 100
+          },
+          "selection_AP_primary": 0.5133043194351089,
+          "threshold": 2.0979117238523006,
+          "AP": 0.6109647146257249,
+          "ROC_AUC": 0.9021975696220393,
+          "precision": 0.4634615384615385,
+          "recall": 0.7774193548387097,
+          "F1": 0.5807228915662651,
+          "Macro_F1": 0.7398974086601627,
+          "TP": 241,
+          "FP": 279,
+          "TN": 1550,
+          "FN": 69,
+          "fold": 1,
+          "seed": 42
+        }
+      ]
+    }
+  ]
+}

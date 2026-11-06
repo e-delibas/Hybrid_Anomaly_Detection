@@ -1,0 +1,22 @@
+{
+  "status": "PASS_STRUCTURAL_AND_PREFLIGHT_TESTS",
+  "research_notebooks": 28,
+  "preflight_notebooks": 1,
+  "python_files_syntax_checked": 26,
+  "externalized_assignments": 35,
+  "recorded_dependencies": 4508,
+  "summary_anchors": 10,
+  "protected_plan_and_worker_values_unchanged": true,
+  "full_experiments_reexecuted": false,
+  "fresh_training_workflow_verified": false,
+  "tests": [
+    "restored scientific code AST equality for 28 notebooks",
+    "literal/worker round-trip equality",
+    "all notebook and Python source parses",
+    "notebook outputs cleared",
+    "preflight matching/missing/changed/outside path checks",
+    "canonical JSON anchor checks",
+    "preflight report success/failure propagation",
+    "supplementary CSV verification"
+  ]
+}

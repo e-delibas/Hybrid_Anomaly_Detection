@@ -1,0 +1,29 @@
+stage,original_name,release_name,description
+01,Revizyon_01_FD001_Veri_Dogrulama.ipynb,01_fd001_data_audit.ipynb,Validate the FD001 input files.
+02B,Revizyon_02B_Bes_Metot_Tamamlama_On_Kontrol.ipynb,02B_recorded_run_audit.ipynb,Audit the archived baseline and ablation files.
+02C,Revizyon_02C_Kayitli_Model_ve_Skor_Dogrulama.ipynb,02C_recorded_score_check.ipynb,Check saved models and reproduce recorded scores.
+02,Revizyon_02_FD001_Protokol_ve_Motor_Bolmeleri.ipynb,02_fd001_engine_protocol.ipynb,Create the FD001 engine-disjoint protocol and reference metadata.
+03B,Revizyon_03B_FD001_Bes_Metot_Pilot.ipynb,03B_fd001_five_detector_pilot.ipynb,Complete the five-detector pilot using the recorded representation.
+03,Revizyon_03_FD001_Ilk_Egitim.ipynb,03_fd001_initial_pilot.ipynb,Run the initial FD001 detector pilot. Final results are completed in 05B.
+04,Revizyon_04_FD001_AE_Karsilastirma.ipynb,04_fd001_ae_pilot.ipynb,Train the FD001 AE pilot. Final five-detector results are completed in 05B.
+05B,Revizyon_05B_FD001_Bes_Metot_Tam_CV.ipynb,05B_fd001_five_detector_cv.ipynb,Complete all five detectors for the recorded FD001 Raw and AE-21 representations.
+05,Revizyon_05_FD001_Motor_Bazli_CV.ipynb,05_fd001_representation_cv.ipynb,Generate the FD001 baseline representations and initial detector outputs.
+06B,Revizyon_06B_FD001_AE_Ablasyon_Bes_Metot_Pilot.ipynb,06B_fd001_ae_five_detector_pilot.ipynb,Complete the five-detector AE-ablation pilot.
+06C,Revizyon_06C_FD001_AE_Ablasyon_Bes_Metot_Tam_CV.ipynb,06C_fd001_ae_five_detector_cv.ipynb,Complete the five-detector AE-ablation cross-validation.
+06,Revizyon_06_FD001_AE_Ablation.ipynb,06_fd001_ae_ablation.ipynb,Generate the AE dimension and architecture ablations.
+07B,Revizyon_07B_FD001_PCA_Bes_Metot_Pilot.ipynb,07B_fd001_pca_five_detector_pilot.ipynb,Complete the five-detector PCA pilot.
+07C,Revizyon_07C_FD001_PCA_Bes_Metot_Tam_CV.ipynb,07C_fd001_pca_five_detector_cv.ipynb,"Complete the five-detector PCA comparison, including the full-dimensional control."
+07,Revizyon_07_FD001_PCA_Karsilastirma.ipynb,07_fd001_pca_comparison.ipynb,Generate PCA representations and initial detector comparisons.
+08,Revizyon_08_FD002_FD003_Veri_Dogrulama.ipynb,08_additional_data_audit.ipynb,Validate the FD002 and FD003 input files.
+09,Revizyon_09_FD002_FD003_Protokol.ipynb,09_additional_engine_protocol.ipynb,Create engine-disjoint protocols for FD002 and FD003.
+10B1,Revizyon_10B1_FD002_FD003_Bes_Metot_Pilot.ipynb,10B1_additional_five_detector_pilot.ipynb,Run the approved additional-subset pilot with the resource amendment.
+10B,Revizyon_10B_FD002_FD003_Bes_Metot_Pilot.ipynb,10B_additional_pilot_historical.ipynb,Historical pilot before the resource amendment. Use 10B1 for the approved replay path.
+10C,Revizyon_10C_FD002_FD003_Bes_Metot_Tam_CV.ipynb,10C_additional_five_detector_cv.ipynb,Complete all five detectors across the three additional-subset preprocessing blocks.
+10,Revizyon_10_FD002_FD003_Deneyleri.ipynb,10_additional_representations.ipynb,Generate the FD002 and FD003 representations and initial detector outputs.
+11,Revizyon_11_FD001_Figure6_ROC.ipynb,11_detector_roc.ipynb,Generate the FD001 detector ROC figure from archived predictions.
+12,Revizyon_12_FD001_Sabit_ve_Secilmis_Parametreler.ipynb,12_fixed_selected_parameters.ipynb,Compare the fixed and selected parameter configurations.
+13,Revizyon_13_FD001_Figure_7.ipynb,13_representation_tsne.ipynb,Generate the descriptive FD001 t-SNE figure.
+14,Revizyon_14_FD001_Detektor_SHAP.ipynb,14_detector_shap.ipynb,Explain actual detector scores and thresholds for the four representative cycles.
+15A,Revizyon_15A_SEAD_Ortam_ve_Protokol_Kontrol.ipynb,15A_sead_preflight.ipynb,Check the SEAD source adaptation and environment.
+15B,Revizyon_15B_FD001_SEAD_Egitimli_Pilot.ipynb,15B_sead_training_pilot.ipynb,Train and select the SEAD pilot without evaluating outer engines.
+15C,Revizyon_15C_FD001_SEAD_Tam_CV.ipynb,15C_sead_full_cv.ipynb,Complete the self-contrastive and full SEAD comparisons over ten folds and three seeds.

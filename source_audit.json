@@ -1,0 +1,358 @@
+{
+  "status": "STRUCTURAL_CHECKS_PASSED",
+  "notebooks": [
+    {
+      "stage": "01",
+      "original_name": "Revizyon_01_FD001_Veri_Dogrulama.ipynb",
+      "release_name": "01_fd001_data_audit.ipynb",
+      "source_notebook_sha256": "d35cef23aeea965fd69c20b592ca5e7d87df25650dad78715c384600cca8bd3c",
+      "source_code_ast_sha256": "2a1ca96a4c74c2b1c088f2fb71913c49c5a108eb088877144ebfd305a53508f1",
+      "reconstructed_code_ast_matches": true,
+      "assets_externalized": 0,
+      "path_settings_changed": [],
+      "description": "Validate the FD001 input files."
+    },
+    {
+      "stage": "02B",
+      "original_name": "Revizyon_02B_Bes_Metot_Tamamlama_On_Kontrol.ipynb",
+      "release_name": "02B_recorded_run_audit.ipynb",
+      "source_notebook_sha256": "2940c0ce7145901972fa146e81b6b252351b371b23d8ef58f1155771db3298a6",
+      "source_code_ast_sha256": "0d64ee987ee4b8c3c7526458bcfcc3702a03b65cc7d66fa309967689cc03f6f8",
+      "reconstructed_code_ast_matches": true,
+      "assets_externalized": 1,
+      "path_settings_changed": [],
+      "description": "Audit the archived baseline and ablation files."
+    },
+    {
+      "stage": "02C",
+      "original_name": "Revizyon_02C_Kayitli_Model_ve_Skor_Dogrulama.ipynb",
+      "release_name": "02C_recorded_score_check.ipynb",
+      "source_notebook_sha256": "f783fa7c12ce942a2c154e4736798d0ea7bafe50b63e71a03d640c4f9f782cc0",
+      "source_code_ast_sha256": "3ba0995822ad269fc16b1f0da031657d7272e68d03cc2357c43d9d5cc0dcb2d7",
+      "reconstructed_code_ast_matches": true,
+      "assets_externalized": 2,
+      "path_settings_changed": [
+        "PYTHON_EXE"
+      ],
+      "description": "Check saved models and reproduce recorded scores."
+    },
+    {
+      "stage": "02",
+      "original_name": "Revizyon_02_FD001_Protokol_ve_Motor_Bolmeleri.ipynb",
+      "release_name": "02_fd001_engine_protocol.ipynb",
+      "source_notebook_sha256": "8f413204cf523b3ee0963c382edec6fd77334375a97891739d744dc2c7e699c6",
+      "source_code_ast_sha256": "3aa7a9284efe647f0c4ca062ffd9776f71dceec3c822db5a695a93149e3e562d",
+      "reconstructed_code_ast_matches": true,
+      "assets_externalized": 0,
+      "path_settings_changed": [],
+      "description": "Create the FD001 engine-disjoint protocol and reference metadata."
+    },
+    {
+      "stage": "03B",
+      "original_name": "Revizyon_03B_FD001_Bes_Metot_Pilot.ipynb",
+      "release_name": "03B_fd001_five_detector_pilot.ipynb",
+      "source_notebook_sha256": "61356b26ce33f7b616f3d62d36ec7132d3e0911abfd581ba7c8daef207200201",
+      "source_code_ast_sha256": "76d27b4ef9240ac36d1ea8f46e63b85a9bc8e527c5aa7f337b05330820a8a464",
+      "reconstructed_code_ast_matches": true,
+      "assets_externalized": 2,
+      "path_settings_changed": [
+        "PYTHON_EXE"
+      ],
+      "description": "Complete the five-detector pilot using the recorded representation."
+    },
+    {
+      "stage": "03",
+      "original_name": "Revizyon_03_FD001_Ilk_Egitim.ipynb",
+      "release_name": "03_fd001_initial_pilot.ipynb",
+      "source_notebook_sha256": "e23e85503cc2555c174aa1f170ec40a449a624b1b89e65f5fcc0d59ad01acba2",
+      "source_code_ast_sha256": "abb5faac1d2ba17159dd44340b5a8ec16045d8fda1cd4bbb24dc73d45fd1a34d",
+      "reconstructed_code_ast_matches": true,
+      "assets_externalized": 0,
+      "path_settings_changed": [],
+      "description": "Run the initial FD001 detector pilot. Final results are completed in 05B."
+    },
+    {
+      "stage": "04",
+      "original_name": "Revizyon_04_FD001_AE_Karsilastirma.ipynb",
+      "release_name": "04_fd001_ae_pilot.ipynb",
+      "source_notebook_sha256": "fc8a53884f218ba750d9d98538ad508ae8f56deb0cd57d1e01ad8f56b016eaba",
+      "source_code_ast_sha256": "3f5268217f6989f27f53dc15c481560c9b81b66e21a1c82e201f7849d13c907f",
+      "reconstructed_code_ast_matches": true,
+      "assets_externalized": 0,
+      "path_settings_changed": [],
+      "description": "Train the FD001 AE pilot. Final five-detector results are completed in 05B."
+    },
+    {
+      "stage": "05B",
+      "original_name": "Revizyon_05B_FD001_Bes_Metot_Tam_CV.ipynb",
+      "release_name": "05B_fd001_five_detector_cv.ipynb",
+      "source_notebook_sha256": "2b5a58a12d465aab951de9efff7d9a92bcad4a975420c2e330922a430288fbcf",
+      "source_code_ast_sha256": "430e766b08b4e526813ec40bfbdeabbaea20f8d7bb2d7da5b9053474f40e2ff5",
+      "reconstructed_code_ast_matches": true,
+      "assets_externalized": 2,
+      "path_settings_changed": [
+        "PYTHON_EXE"
+      ],
+      "description": "Complete all five detectors for the recorded FD001 Raw and AE-21 representations."
+    },
+    {
+      "stage": "05",
+      "original_name": "Revizyon_05_FD001_Motor_Bazli_CV.ipynb",
+      "release_name": "05_fd001_representation_cv.ipynb",
+      "source_notebook_sha256": "592beb90a7ba35c6d95151ef30c148c83ba8a27e467a85facf0255775b4e1ed2",
+      "source_code_ast_sha256": "931efa8dd5df95d33b6f387f97ac30141cb49143a63eeeb73612fc5232e8e0cb",
+      "reconstructed_code_ast_matches": true,
+      "assets_externalized": 0,
+      "path_settings_changed": [],
+      "description": "Generate the FD001 baseline representations and initial detector outputs."
+    },
+    {
+      "stage": "06B",
+      "original_name": "Revizyon_06B_FD001_AE_Ablasyon_Bes_Metot_Pilot.ipynb",
+      "release_name": "06B_fd001_ae_five_detector_pilot.ipynb",
+      "source_notebook_sha256": "b5d7534b89b15cdcf0d1a117a9642031210c9704c8a4eeb0fd0ec5719aac98d5",
+      "source_code_ast_sha256": "286a46d7bc7e7a89850f39c4d1470e3d852b727613bebb40106a01ccb6e4c8db",
+      "reconstructed_code_ast_matches": true,
+      "assets_externalized": 2,
+      "path_settings_changed": [
+        "PYTHON_EXE"
+      ],
+      "description": "Complete the five-detector AE-ablation pilot."
+    },
+    {
+      "stage": "06C",
+      "original_name": "Revizyon_06C_FD001_AE_Ablasyon_Bes_Metot_Tam_CV.ipynb",
+      "release_name": "06C_fd001_ae_five_detector_cv.ipynb",
+      "source_notebook_sha256": "110661bdd58ce1181b901e72e4c33830fdb652af2902557fde80041e039ed262",
+      "source_code_ast_sha256": "e5fd2acb9280040c0568677603187c56e090dd51a9994650e53d811b216be10f",
+      "reconstructed_code_ast_matches": true,
+      "assets_externalized": 2,
+      "path_settings_changed": [
+        "PYTHON_EXE"
+      ],
+      "description": "Complete the five-detector AE-ablation cross-validation."
+    },
+    {
+      "stage": "06",
+      "original_name": "Revizyon_06_FD001_AE_Ablation.ipynb",
+      "release_name": "06_fd001_ae_ablation.ipynb",
+      "source_notebook_sha256": "5a77bdece014a2d3dd08c0240da5a2cd77eab34ae65522cffc392ef1388bae8a",
+      "source_code_ast_sha256": "eca24fbd27a8bb8c59d57819872a2b2d8464b78882bc088c6c9add6f76739d52",
+      "reconstructed_code_ast_matches": true,
+      "assets_externalized": 1,
+      "path_settings_changed": [],
+      "description": "Generate the AE dimension and architecture ablations."
+    },
+    {
+      "stage": "07B",
+      "original_name": "Revizyon_07B_FD001_PCA_Bes_Metot_Pilot.ipynb",
+      "release_name": "07B_fd001_pca_five_detector_pilot.ipynb",
+      "source_notebook_sha256": "de7dd554fdbcf7849669ae477da52cdbf3f76dbf1cbd2a11d6b916fdc369492e",
+      "source_code_ast_sha256": "cf3ba659af4d7c85159e958da572aaf8152a0defd1b5f6e3790286af44bc2247",
+      "reconstructed_code_ast_matches": true,
+      "assets_externalized": 2,
+      "path_settings_changed": [
+        "PYTHON_EXE"
+      ],
+      "description": "Complete the five-detector PCA pilot."
+    },
+    {
+      "stage": "07C",
+      "original_name": "Revizyon_07C_FD001_PCA_Bes_Metot_Tam_CV.ipynb",
+      "release_name": "07C_fd001_pca_five_detector_cv.ipynb",
+      "source_notebook_sha256": "5d51487149b7bb56197e91e9aafe74c0b50c4555ae1512ab132aef09f0ac79f7",
+      "source_code_ast_sha256": "1b250678747531c69b2f65df3862d4a93d89ae90f01a773615b05cc9e8db5c56",
+      "reconstructed_code_ast_matches": true,
+      "assets_externalized": 2,
+      "path_settings_changed": [
+        "PYTHON_EXE"
+      ],
+      "description": "Complete the five-detector PCA comparison, including the full-dimensional control."
+    },
+    {
+      "stage": "07",
+      "original_name": "Revizyon_07_FD001_PCA_Karsilastirma.ipynb",
+      "release_name": "07_fd001_pca_comparison.ipynb",
+      "source_notebook_sha256": "4c66440cad824e8a58db39c9802f14559be26bf743a3f5e5944caa6536b7f8df",
+      "source_code_ast_sha256": "68d626337a31383ca024a8528309a23c63b0a162de0880d64a5afee9484bf924",
+      "reconstructed_code_ast_matches": true,
+      "assets_externalized": 1,
+      "path_settings_changed": [],
+      "description": "Generate PCA representations and initial detector comparisons."
+    },
+    {
+      "stage": "08",
+      "original_name": "Revizyon_08_FD002_FD003_Veri_Dogrulama.ipynb",
+      "release_name": "08_additional_data_audit.ipynb",
+      "source_notebook_sha256": "3884eb6dcceed8448f8a4c96bca4770387d2973b0b190d30cd11f9d9cb3a5e08",
+      "source_code_ast_sha256": "93f2a858ce3f643ca53e2fdb98ffe7e173fb346dfd57474ef6063e5d0b469ce5",
+      "reconstructed_code_ast_matches": true,
+      "assets_externalized": 0,
+      "path_settings_changed": [],
+      "description": "Validate the FD002 and FD003 input files."
+    },
+    {
+      "stage": "09",
+      "original_name": "Revizyon_09_FD002_FD003_Protokol.ipynb",
+      "release_name": "09_additional_engine_protocol.ipynb",
+      "source_notebook_sha256": "74bf0db1ff9da173899455c7e62eeb042392b7d0ece5a42da9c212fc018fbbcd",
+      "source_code_ast_sha256": "9148baff5dee3e3a6ac0a0ae5fc59e144d37b084b444ce4a8c9a76d5fd5a8ddf",
+      "reconstructed_code_ast_matches": true,
+      "assets_externalized": 0,
+      "path_settings_changed": [],
+      "description": "Create engine-disjoint protocols for FD002 and FD003."
+    },
+    {
+      "stage": "10B1",
+      "original_name": "Revizyon_10B1_FD002_FD003_Bes_Metot_Pilot.ipynb",
+      "release_name": "10B1_additional_five_detector_pilot.ipynb",
+      "source_notebook_sha256": "44b354581f716b76306ef15d596b4c0d0a2422d5cf11035e61d6d8f01f9ef2bf",
+      "source_code_ast_sha256": "a5abbf860ff702e7af946de761dbf26ec41754b38e7ac50c0dd308ce6a3c019e",
+      "reconstructed_code_ast_matches": true,
+      "assets_externalized": 2,
+      "path_settings_changed": [
+        "PROJECT_DIR",
+        "PYTHON_EXE"
+      ],
+      "description": "Run the approved additional-subset pilot with the resource amendment."
+    },
+    {
+      "stage": "10B",
+      "original_name": "Revizyon_10B_FD002_FD003_Bes_Metot_Pilot.ipynb",
+      "release_name": "10B_additional_pilot_historical.ipynb",
+      "source_notebook_sha256": "ab47e9020ae3770f646ffb3f20c74661c961588f0a50a361dd36b503acfe3684",
+      "source_code_ast_sha256": "bcccc9b93e6fa05e8dc8627be0a637ce9cbc42a60097eb26ee854ecbbcd2b766",
+      "reconstructed_code_ast_matches": true,
+      "assets_externalized": 2,
+      "path_settings_changed": [
+        "PROJECT_DIR",
+        "PYTHON_EXE"
+      ],
+      "description": "Historical pilot before the resource amendment. Use 10B1 for the approved replay path."
+    },
+    {
+      "stage": "10C",
+      "original_name": "Revizyon_10C_FD002_FD003_Bes_Metot_Tam_CV.ipynb",
+      "release_name": "10C_additional_five_detector_cv.ipynb",
+      "source_notebook_sha256": "d6f80311c1b50c6d3b36fd20e5bfc4eacffb49646b41cea8543a3f7708c692c8",
+      "source_code_ast_sha256": "768a1d8a85c9ca6516bf5f76ef7689ceaf8edbc60f0a98752a26f96d0698ac3f",
+      "reconstructed_code_ast_matches": true,
+      "assets_externalized": 2,
+      "path_settings_changed": [
+        "PROJECT_DIR",
+        "PYTHON_EXE"
+      ],
+      "description": "Complete all five detectors across the three additional-subset preprocessing blocks."
+    },
+    {
+      "stage": "10",
+      "original_name": "Revizyon_10_FD002_FD003_Deneyleri.ipynb",
+      "release_name": "10_additional_representations.ipynb",
+      "source_notebook_sha256": "b527c8f4422f367e72311578f8efeb29864c7eae31c03e31a5aef2b7f6ced724",
+      "source_code_ast_sha256": "fd6cc53f38ddfb9b99f9fc92984f737fc554b5ce0d89c184446424fdca36c851",
+      "reconstructed_code_ast_matches": true,
+      "assets_externalized": 1,
+      "path_settings_changed": [],
+      "description": "Generate the FD002 and FD003 representations and initial detector outputs."
+    },
+    {
+      "stage": "11",
+      "original_name": "Revizyon_11_FD001_Figure6_ROC.ipynb",
+      "release_name": "11_detector_roc.ipynb",
+      "source_notebook_sha256": "7836698eaf52029b4f847ffe2649215338197183150e53f810836bbf2d98e1fb",
+      "source_code_ast_sha256": "9c66d3aaece0db4792eed64890084f8db743473a926a8af0a9a9778d4bbc75f5",
+      "reconstructed_code_ast_matches": true,
+      "assets_externalized": 1,
+      "path_settings_changed": [
+        "PROJECT_DIR"
+      ],
+      "description": "Generate the FD001 detector ROC figure from archived predictions."
+    },
+    {
+      "stage": "12",
+      "original_name": "Revizyon_12_FD001_Sabit_ve_Secilmis_Parametreler.ipynb",
+      "release_name": "12_fixed_selected_parameters.ipynb",
+      "source_notebook_sha256": "b125f88dc58f130f4a05954c72284a5bf569eb09e21ab5a2eacdf86f99f0e59e",
+      "source_code_ast_sha256": "4b3792d6b433c5d731fe3c630f20ac32240e8b0063181374b032c460280bb2d7",
+      "reconstructed_code_ast_matches": true,
+      "assets_externalized": 2,
+      "path_settings_changed": [
+        "PROJECT_DIR",
+        "PYTHON_EXE"
+      ],
+      "description": "Compare the fixed and selected parameter configurations."
+    },
+    {
+      "stage": "13",
+      "original_name": "Revizyon_13_FD001_Figure_7.ipynb",
+      "release_name": "13_representation_tsne.ipynb",
+      "source_notebook_sha256": "af63b9d330462fe67a5f5282e058a5fa8b2e9c5a7fd6c4c022259714d5a5bfaf",
+      "source_code_ast_sha256": "1c7c9348598904cdf2c327872e8675fabf92490ef354c6ba6b64c2dd55dfcfc7",
+      "reconstructed_code_ast_matches": true,
+      "assets_externalized": 1,
+      "path_settings_changed": [
+        "PROJECT_DIR"
+      ],
+      "description": "Generate the descriptive FD001 t-SNE figure."
+    },
+    {
+      "stage": "14",
+      "original_name": "Revizyon_14_FD001_Detektor_SHAP.ipynb",
+      "release_name": "14_detector_shap.ipynb",
+      "source_notebook_sha256": "26bf5b444a0d2514ff7ca5cb4ce2250870117f7acfe336e33b4b9c7e292c4910",
+      "source_code_ast_sha256": "0a4af0c27154f4145761b0a4d4ea8b71b76eab46de2e0d01fe8a77db2893cfb1",
+      "reconstructed_code_ast_matches": true,
+      "assets_externalized": 2,
+      "path_settings_changed": [
+        "PROJECT_DIR"
+      ],
+      "description": "Explain actual detector scores and thresholds for the four representative cycles."
+    },
+    {
+      "stage": "15A",
+      "original_name": "Revizyon_15A_SEAD_Ortam_ve_Protokol_Kontrol.ipynb",
+      "release_name": "15A_sead_preflight.ipynb",
+      "source_notebook_sha256": "2468d1711e40a01037a07be81d87025050804336d150e40373048dfd25f5c342",
+      "source_code_ast_sha256": "385ff079ef93ac344a1ec8b56dc0c4e665e2f6ccff4e1ae916eb03bc9598fb1f",
+      "reconstructed_code_ast_matches": true,
+      "assets_externalized": 0,
+      "path_settings_changed": [
+        "PROJECT_DIR",
+        "PYTHON_EXECUTABLE"
+      ],
+      "description": "Check the SEAD source adaptation and environment."
+    },
+    {
+      "stage": "15B",
+      "original_name": "Revizyon_15B_FD001_SEAD_Egitimli_Pilot.ipynb",
+      "release_name": "15B_sead_training_pilot.ipynb",
+      "source_notebook_sha256": "e4efa730e2803bfb4439f71a706f8705ee9e348e24385844143faafbb8eae184",
+      "source_code_ast_sha256": "1da5936d6c0188c9d905cb4f156efea6f7dd62f7aeba6e093bf80da19402a0bc",
+      "reconstructed_code_ast_matches": true,
+      "assets_externalized": 2,
+      "path_settings_changed": [
+        "PROJECT_DIR",
+        "TORCH_PYTHON",
+        "CLASSICAL_PYTHON"
+      ],
+      "description": "Train and select the SEAD pilot without evaluating outer engines."
+    },
+    {
+      "stage": "15C",
+      "original_name": "Revizyon_15C_FD001_SEAD_Tam_CV.ipynb",
+      "release_name": "15C_sead_full_cv.ipynb",
+      "source_notebook_sha256": "6f89948e0ec814d1040dd9266f540f5a119f87c4aa92ef5dd11dac4ad9afb920",
+      "source_code_ast_sha256": "87b14c53005a51858df24c055e67d270c66dedc4986f0e7bc53721d4513572a5",
+      "reconstructed_code_ast_matches": true,
+      "assets_externalized": 3,
+      "path_settings_changed": [
+        "PROJECT_DIR",
+        "TORCH_PYTHON",
+        "CLASSICAL_PYTHON"
+      ],
+      "description": "Complete the self-contrastive and full SEAD comparisons over ten folds and three seeds."
+    }
+  ],
+  "validation_scope": "Code AST restored to the original after reversing documented path and literal-loader substitutions. No scientific model execution.",
+  "source_archive_sha256": "1255429b21595fe722dac96c6f9fcd1c6e3b3de8eab9e3d6677ab3b064d0b3c8"
+}
